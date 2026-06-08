@@ -1,0 +1,1134 @@
+# PART 6 — UI/UX DESIGN SYSTEM, COMMAND CENTER DASHBOARDS & USER EXPERIENCE
+
+---
+
+# 1. DESIGN OBJECTIVE
+
+The interface must look like a professional:
+
+```text
+SOC (Security Operations Center)
+
+NOC (Network Operations Center)
+
+Command Center
+
+Mission Control Center
+
+Global Operations Dashboard
+```
+
+The UI should immediately communicate:
+
+```text
+Awareness
+Control
+Intelligence
+Monitoring
+Action
+```
+
+---
+
+# 2. DESIGN PRINCIPLES
+
+Always:
+
+```text
+Clean
+
+Modern
+
+Minimal
+
+Data Dense
+
+Professional
+
+Fast
+```
+
+Avoid:
+
+```text
+Excessive Animations
+
+Large Empty Spaces
+
+Unnecessary Gradients
+
+Consumer-App Styling
+```
+
+---
+
+# 3. DESIGN THEME
+
+Primary Theme:
+
+```text
+Dark Mode
+```
+
+Secondary:
+
+```text
+Light Mode
+```
+
+Default:
+
+```text
+Dark
+```
+
+---
+
+# 4. APPLICATION LAYOUT
+
+```text
+┌──────────────────────────────────────────────┐
+│ Top Navigation                               │
+├─────────────┬────────────────────────────────┤
+│             │                                │
+│ Side Menu   │          Main Content          │
+│             │                                │
+│             │                                │
+├─────────────┴────────────────────────────────┤
+│ Footer (optional)                            │
+└──────────────────────────────────────────────┘
+```
+
+---
+
+# 5. SCREEN REGIONS
+
+```text
+TopBar
+
+SideNav
+
+Map Region
+
+Widget Region
+
+Table Region
+
+Details Region
+
+Modal Region
+```
+
+---
+
+# 6. TOPBAR COMPONENTS
+
+```text
+Logo
+
+Global Search
+
+Map Search
+
+Notifications
+
+Alerts
+
+Theme Toggle
+
+Language Switcher
+
+User Profile
+
+Logout
+```
+
+---
+
+# 7. SIDEBAR ARCHITECTURE
+
+Primary Navigation.
+
+---
+
+## Core Modules
+
+```text
+Dashboard
+
+Global Event Monitoring
+
+Live Asset Tracking
+
+Cyber Security SOC
+
+Network Monitoring
+
+Logistics Control Center
+
+Fraud Detection
+
+IoT Monitoring
+
+Smart City
+
+Telecom NOC
+
+Emergency Response
+
+Reports
+
+Administration
+
+Settings
+```
+
+---
+
+# 8. SIDEBAR BEHAVIOR
+
+Supports:
+
+```text
+Collapse
+
+Expand
+
+Search
+
+Favorites
+
+Recent Pages
+```
+
+---
+
+# 9. DASHBOARD TYPES
+
+The platform contains multiple dashboard modes.
+
+---
+
+## Dashboard
+
+General Overview
+
+---
+
+## SOC Dashboard
+
+Cybersecurity
+
+---
+
+## NOC Dashboard
+
+Infrastructure Monitoring
+
+---
+
+## Fleet Dashboard
+
+Asset Tracking
+
+---
+
+## Fraud Dashboard
+
+Risk Analysis
+
+---
+
+## IoT Dashboard
+
+Device Monitoring
+
+---
+
+## Emergency Dashboard
+
+Incident Management
+
+---
+
+# 10. GLOBAL DASHBOARD LAYOUT
+
+```text
+┌───────────────────────────────────────────┐
+│ KPI CARDS                                 │
+├───────────────────────────────────────────┤
+│                                           │
+│              WORLD MAP                    │
+│                                           │
+├───────────────────────────────────────────┤
+│ CHARTS                                    │
+├───────────────────────────────────────────┤
+│ TABLES                                    │
+└───────────────────────────────────────────┘
+```
+
+---
+
+# 11. KPI CARD SYSTEM
+
+Display:
+
+```text
+Total Events
+
+Critical Alerts
+
+Active Assets
+
+Connected Devices
+
+Threat Count
+
+Countries Active
+
+Network Health
+
+System Uptime
+```
+
+---
+
+# 12. KPI CARD DESIGN
+
+Each card:
+
+```text
+Title
+
+Value
+
+Trend
+
+Icon
+
+Mini Chart
+```
+
+Example:
+
+```text
+Critical Alerts
+
+152
+
+↑ 14%
+```
+
+---
+
+# 13. MAP AREA
+
+Map is the primary dashboard component.
+
+Minimum:
+
+```text
+50%–70%
+```
+
+of visible screen.
+
+---
+
+# 14. MAP CONTROLS
+
+```text
+Zoom
+
+Reset
+
+Compass
+
+Layer Toggle
+
+Fullscreen
+
+Search
+
+Legend
+```
+
+---
+
+# 15. MAP TOOLBAR
+
+```text
+Markers
+
+Clusters
+
+Heatmap
+
+Routes
+
+Geofences
+
+3D View
+
+Filters
+```
+
+---
+
+# 16. MAP POPUPS
+
+Display:
+
+```text
+Name
+
+Type
+
+Severity
+
+Status
+
+Location
+
+Timestamp
+
+Actions
+```
+
+Actions:
+
+```text
+Open Details
+
+View History
+
+Filter Similar
+```
+
+---
+
+# 17. DASHBOARD CHARTS
+
+Use:
+
+```text
+Bar Chart
+
+Line Chart
+
+Area Chart
+
+Pie Chart
+
+Donut Chart
+
+Radar Chart
+
+Time Series
+```
+
+---
+
+# 18. CHART USAGE
+
+### SOC
+
+```text
+Attack Types
+
+Threat Sources
+
+Severity Distribution
+```
+
+---
+
+### NOC
+
+```text
+Network Health
+
+Latency
+
+Node Status
+```
+
+---
+
+### Fleet
+
+```text
+Vehicle Status
+
+Route Performance
+
+Travel Time
+```
+
+---
+
+### Fraud
+
+```text
+Risk Levels
+
+Suspicious Transactions
+
+Regions
+```
+
+---
+
+# 19. TABLE SYSTEM
+
+Used for:
+
+```text
+Events
+
+Assets
+
+Devices
+
+Alerts
+
+Users
+
+Reports
+```
+
+---
+
+# 20. TABLE FEATURES
+
+Support:
+
+```text
+Pagination
+
+Sorting
+
+Filtering
+
+Column Visibility
+
+Export
+
+Search
+```
+
+---
+
+# 21. EVENT TABLE
+
+Columns:
+
+```text
+ID
+
+Type
+
+Severity
+
+Status
+
+Location
+
+Time
+
+Actions
+```
+
+---
+
+# 22. ASSET TABLE
+
+Columns:
+
+```text
+ID
+
+Name
+
+Type
+
+Status
+
+Location
+
+Speed
+
+Last Update
+```
+
+---
+
+# 23. DEVICE TABLE
+
+Columns:
+
+```text
+ID
+
+Device
+
+Status
+
+Location
+
+Last Seen
+```
+
+---
+
+# 24. ALERT TABLE
+
+Columns:
+
+```text
+ID
+
+Severity
+
+Status
+
+Assigned To
+
+Created At
+```
+
+---
+
+# 25. DETAILS PANEL
+
+Right-side sliding panel.
+
+Displays:
+
+```text
+Metadata
+
+History
+
+Timeline
+
+Related Objects
+
+Actions
+```
+
+---
+
+# 26. TIMELINE COMPONENT
+
+Display:
+
+```text
+Created
+
+Updated
+
+Resolved
+
+Closed
+```
+
+Events.
+
+---
+
+# 27. FILTER PANEL
+
+Global filtering.
+
+Supports:
+
+```text
+Country
+
+Region
+
+City
+
+Date
+
+Severity
+
+Status
+
+Type
+```
+
+---
+
+# 28. FILTER BEHAVIOR
+
+Updates:
+
+```text
+Map
+
+Charts
+
+Tables
+
+KPIs
+```
+
+simultaneously.
+
+---
+
+# 29. SEARCH SYSTEM
+
+Global Search.
+
+Search:
+
+```text
+Events
+
+Assets
+
+Devices
+
+Users
+
+Locations
+```
+
+---
+
+# 30. NOTIFICATION CENTER
+
+Categories:
+
+```text
+System
+
+Alert
+
+User
+
+Device
+
+Security
+```
+
+---
+
+# 31. ALERT CENTER
+
+Display:
+
+```text
+Critical
+
+High
+
+Medium
+
+Low
+```
+
+with color coding.
+
+---
+
+# 32. REPORT CENTER
+
+Generate:
+
+```text
+PDF
+
+Excel
+
+CSV
+```
+
+---
+
+Reports:
+
+```text
+Events
+
+Assets
+
+Threats
+
+Devices
+
+Transactions
+```
+
+---
+
+# 33. USER MANAGEMENT
+
+Features:
+
+```text
+Create User
+
+Update User
+
+Assign Roles
+
+Deactivate User
+```
+
+---
+
+# 34. SETTINGS PAGE
+
+Contains:
+
+```text
+Theme
+
+Language
+
+Alert Rules
+
+Map Defaults
+
+System Preferences
+```
+
+---
+
+# 35. PROFILE PAGE
+
+Display:
+
+```text
+Name
+
+Role
+
+Email
+
+Avatar
+
+Activity
+```
+
+---
+
+# 36. MODAL SYSTEM
+
+Reusable modals:
+
+```text
+Create
+
+Edit
+
+Delete
+
+View
+
+Import
+
+Export
+```
+
+---
+
+# 37. FORM DESIGN
+
+Every form:
+
+```text
+Label
+
+Input
+
+Validation
+
+Help Text
+
+Submit
+```
+
+---
+
+# 38. COLOR SEMANTICS
+
+```text
+Green
+Healthy
+
+Blue
+Information
+
+Yellow
+Warning
+
+Orange
+High Risk
+
+Red
+Critical
+
+Gray
+Inactive
+```
+
+---
+
+# 39. ICON SYSTEM
+
+Use consistent icon library.
+
+Examples:
+
+```text
+Map
+
+User
+
+Asset
+
+Alert
+
+Device
+
+Report
+
+Settings
+```
+
+---
+
+# 40. LOADING STATES
+
+Support:
+
+```text
+Skeleton
+
+Spinner
+
+Progress Bar
+```
+
+---
+
+# 41. EMPTY STATES
+
+Display:
+
+```text
+No Data Found
+
+No Events
+
+No Assets
+
+No Results
+```
+
+---
+
+# 42. ERROR STATES
+
+Display:
+
+```text
+Network Error
+
+Permission Denied
+
+Server Error
+
+Not Found
+```
+
+---
+
+# 43. RESPONSIVE STRATEGY
+
+Primary Target:
+
+```text
+1920x1080
+
+2560x1440
+
+4K Displays
+```
+
+Support:
+
+```text
+Laptop
+
+Desktop
+
+Operations Screens
+```
+
+---
+
+# 44. MULTI-MONITOR READINESS
+
+Dashboard must work across:
+
+```text
+Control Rooms
+
+SOC Walls
+
+NOC Walls
+
+Operations Centers
+```
+
+---
+
+# 45. ACCESSIBILITY
+
+Support:
+
+```text
+Keyboard Navigation
+
+Screen Readers
+
+High Contrast
+
+Scalable Text
+```
+
+---
+
+# 46. THEME ARCHITECTURE
+
+```text
+themeStore
+
+darkTheme
+
+lightTheme
+
+systemTheme
+```
+
+---
+
+# 47. WIDGET LIBRARY
+
+Reusable widgets:
+
+```text
+KPI Widget
+
+Chart Widget
+
+Table Widget
+
+Map Widget
+
+Timeline Widget
+
+Alert Widget
+
+Activity Widget
+```
+
+---
+
+# 48. UI PERFORMANCE
+
+Use:
+
+```text
+Lazy Loading
+
+Virtual Tables
+
+Memoization
+
+Pagination
+
+Code Splitting
+```
+
+---
+
+# 49. USER EXPERIENCE RULE
+
+Every interaction should require:
+
+```text
+Maximum 3 Clicks
+```
+
+to reach critical information.
+
+---
+
+# 50. COMMAND CENTER RULE
+
+The UI must always answer:
+
+```text
+What is happening?
+
+Where is it happening?
+
+How severe is it?
+
+What requires attention?
+
+What action should be taken?
+```
+
+within seconds of viewing the dashboard.
+
+---
+
+# PART 6 DELIVERABLE
+
+UI/UX must provide:
+
+✅ Enterprise Command Center Design
+
+✅ SOC/NOC Dashboard Experience
+
+✅ Map-Centric Layout
+
+✅ KPI Cards
+
+✅ Analytics Charts
+
+✅ Advanced Tables
+
+✅ Global Filters
+
+✅ Search
+
+✅ Notifications
+
+✅ Alerts
+
+✅ Reports
+
+✅ Theme System
+
+✅ Responsive Design
+
+✅ Multi-Monitor Readiness
+
+✅ Accessibility Support
+
+✅ Reusable Widget Library
+
+---
+
+# NEXT PART
+
+**PART 7 — Production Architecture, Deployment Strategy, CI/CD, Scalability, Docker, Reverse Proxy, MapTiler Server Integration, Security Hardening, Monitoring, Logging, Backup & Disaster Recovery Architecture.**

@@ -1,0 +1,64 @@
+.page {
+  padding: 16px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.header h2 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.header p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.card h3 {
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+.formats {
+  display: flex;
+  gap: 8px;
+}
+
+.formatBtn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.formatBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.note {
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}

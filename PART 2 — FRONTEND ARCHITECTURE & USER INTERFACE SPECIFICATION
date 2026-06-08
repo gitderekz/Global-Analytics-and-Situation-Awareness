@@ -1,0 +1,949 @@
+# PART 2 — FRONTEND ARCHITECTURE & USER INTERFACE SPECIFICATION
+
+---
+
+# 1. FRONTEND OBJECTIVE
+
+The frontend is the Command Center.
+
+The map is always the primary visualization component.
+
+Everything else exists to:
+
+* Filter map data
+* Analyze map data
+* Visualize map data
+* Control map data
+
+The map must never feel like a secondary widget.
+
+---
+
+# 2. FRONTEND TECHNOLOGY STACK
+
+```text
+ReactJS
+JavaScript
+MapLibre GL JS
+Three.js
+Socket.IO Client
+Axios
+React Router
+Zustand
+CSS Modules
+```
+
+---
+
+# 3. FRONTEND FOLDER STRUCTURE
+
+```text
+frontend/src/
+
+api/
+assets/
+components/
+hooks/
+layouts/
+maps/
+modals/
+pages/
+routes/
+services/
+store/
+styles/
+threejs/
+utils/
+widgets/
+```
+
+---
+
+# 4. PAGE ARCHITECTURE
+
+```text
+Login
+Dashboard
+Events
+Assets
+SOC
+Network
+Logistics
+Fraud
+IoT
+Emergency
+Reports
+Settings
+Profile
+```
+
+---
+
+# 5. MAIN DASHBOARD LAYOUT
+
+```text
+┌───────────────────────────────────────┐
+│ Top Navigation Bar                    │
+├───────┬───────────────────────────────┤
+│       │                               │
+│ Side  │                               │
+│ Menu  │         Map Area              │
+│       │                               │
+│       │                               │
+├───────┴───────────────────────────────┤
+│ Analytics Widgets                     │
+└───────────────────────────────────────┘
+```
+
+---
+
+# 6. TOP NAVIGATION
+
+Contains:
+
+```text
+Logo
+Global Search
+Notifications
+Alerts
+Theme Toggle
+Language Switch
+User Profile
+Logout
+```
+
+---
+
+# 7. SIDE NAVIGATION
+
+The SideNav drives the entire platform.
+
+---
+
+## Main Modules
+
+```text
+Dashboard
+
+Global Event Monitoring
+
+Live Asset Tracking
+
+Cyber Security SOC
+
+Network Monitoring
+
+Logistics Control Center
+
+Financial Fraud Detection
+
+IoT Monitoring
+
+Smart City
+
+Telecom NOC
+
+Emergency Response
+
+Reports
+
+Administration
+
+Settings
+```
+
+---
+
+# 8. DASHBOARD HOME
+
+Purpose:
+
+Provide overall system awareness.
+
+---
+
+## Widgets
+
+```text
+Total Events
+
+Active Assets
+
+Active Alerts
+
+Connected Devices
+
+Threat Count
+
+Countries Online
+
+Network Status
+
+Last Updates
+```
+
+---
+
+## Map
+
+Center Screen.
+
+Default:
+
+```text
+World View
+```
+
+---
+
+# 9. MAP COMPONENT ARCHITECTURE
+
+```text
+maps/
+
+MapContainer.jsx
+MapControls.jsx
+MapLayers.jsx
+MapMarkers.jsx
+MapHeatmap.jsx
+MapClusters.jsx
+MapRoutes.jsx
+MapGeofences.jsx
+MapSearch.jsx
+MapLegend.jsx
+```
+
+---
+
+# 10. MAPTILER INTEGRATION
+
+Map Source:
+
+```text
+http://localhost:3650
+```
+
+Style:
+
+```text
+http://localhost:3650/styles/basic/style.json
+```
+
+MapLibre loads local vector tiles.
+
+Never use external tile providers.
+
+---
+
+# 11. MAP FEATURES
+
+Must support:
+
+```text
+Pan
+Zoom
+Rotate
+Pitch
+Search
+Filter
+Hover
+Click
+Select
+```
+
+---
+
+# 12. MAP SEARCH
+
+Search:
+
+```text
+Countries
+Regions
+Cities
+Assets
+Events
+Users
+Devices
+```
+
+Search result:
+
+```text
+Center Map
+Open Popup
+Highlight Object
+```
+
+---
+
+# 13. MAP POPUPS
+
+Popup Contents:
+
+```text
+Title
+
+Type
+
+Status
+
+Timestamp
+
+Metadata
+
+Actions
+```
+
+---
+
+# 14. MAP MARKERS
+
+Marker Types:
+
+```text
+Event
+
+Asset
+
+Vehicle
+
+User
+
+Sensor
+
+Threat
+
+Device
+```
+
+Each marker:
+
+```text
+Lat
+Lng
+Icon
+Status
+Color
+Metadata
+```
+
+---
+
+# 15. MARKER COLORS
+
+```text
+Green
+Active
+
+Blue
+Information
+
+Yellow
+Warning
+
+Orange
+High Risk
+
+Red
+Critical
+
+Gray
+Offline
+```
+
+---
+
+# 16. MARKER ANIMATIONS
+
+Support:
+
+```text
+Pulse
+
+Blink
+
+Rotate
+
+Scale
+
+Bounce
+```
+
+Used for:
+
+```text
+Critical Alerts
+
+Moving Assets
+
+Live Threats
+```
+
+---
+
+# 17. CLUSTERING ENGINE
+
+Use:
+
+```text
+Supercluster
+```
+
+Behavior:
+
+Zoom Out:
+
+```text
+2000 Markers
+
+↓
+
+35 Clusters
+```
+
+Zoom In:
+
+```text
+35 Clusters
+
+↓
+
+2000 Markers
+```
+
+---
+
+# 18. HEATMAP SYSTEM
+
+Purpose:
+
+Display density.
+
+Examples:
+
+```text
+Cyber Attacks
+
+Incidents
+
+Transactions
+
+Sensors
+
+Traffic
+```
+
+---
+
+# 19. HEATMAP CONTROLS
+
+```text
+Radius
+
+Intensity
+
+Opacity
+
+Gradient
+```
+
+---
+
+# 20. ROUTE VISUALIZATION
+
+Support:
+
+```text
+Vehicle Paths
+
+Ship Routes
+
+Aircraft Routes
+
+Network Connections
+```
+
+Display:
+
+```text
+Animated Lines
+
+Directional Arrows
+
+Speed Indicators
+```
+
+---
+
+# 21. GEOFENCE SYSTEM
+
+Support:
+
+```text
+Circle
+
+Rectangle
+
+Polygon
+```
+
+Use Cases:
+
+```text
+Restricted Areas
+
+Danger Zones
+
+Operational Zones
+```
+
+---
+
+# 22. GEOGRAPHIC DRILLDOWN
+
+Hierarchy:
+
+```text
+World
+
+Continent
+
+Country
+
+Region
+
+City
+
+District
+```
+
+Clicking a region:
+
+```text
+Updates Map
+
+Updates Charts
+
+Updates KPIs
+
+Updates Tables
+```
+
+---
+
+# 23. THREE.JS ARCHITECTURE
+
+```text
+threejs/
+
+ThreeScene.js
+
+ThreeBuildings.js
+
+ThreeVehicles.js
+
+ThreeRoutes.js
+
+ThreeAssets.js
+
+ThreeEffects.js
+```
+
+---
+
+# 24. THREE.JS OBJECTS
+
+Support:
+
+```text
+Buildings
+
+Factories
+
+Towers
+
+Vehicles
+
+Aircraft
+
+Ships
+
+Satellites
+
+Sensors
+```
+
+---
+
+# 25. THREE.JS EFFECTS
+
+```text
+Glow
+
+Pulse
+
+Radar Sweep
+
+Particle Effects
+
+Route Animation
+```
+
+---
+
+# 26. MAPLIBRE + THREE.JS SYNCHRONIZATION
+
+Synchronize:
+
+```text
+Camera
+
+Zoom
+
+Bearing
+
+Pitch
+
+Position
+```
+
+Map movement updates Three.js automatically.
+
+---
+
+# 27. REAL-TIME DATA FLOW
+
+```text
+Backend
+
+↓
+
+Socket.IO
+
+↓
+
+Zustand Store
+
+↓
+
+Map Layers
+
+↓
+
+UI Components
+```
+
+No page refreshes.
+
+---
+
+# 28. ZUSTAND STORE ARCHITECTURE
+
+```text
+authStore
+
+mapStore
+
+eventStore
+
+assetStore
+
+alertStore
+
+userStore
+
+settingsStore
+
+socketStore
+```
+
+---
+
+# 29. MAP STORE
+
+Contains:
+
+```text
+Center
+
+Zoom
+
+Pitch
+
+Bearing
+
+Selected Object
+
+Hovered Object
+
+Filters
+```
+
+---
+
+# 30. EVENT STORE
+
+Contains:
+
+```text
+Events
+
+Selected Event
+
+Filters
+
+Statistics
+
+Heatmap Data
+```
+
+---
+
+# 31. ASSET STORE
+
+Contains:
+
+```text
+Assets
+
+Live Locations
+
+Routes
+
+Statuses
+```
+
+---
+
+# 32. ALERT STORE
+
+Contains:
+
+```text
+Alerts
+
+Critical Alerts
+
+Acknowledged Alerts
+
+Notifications
+```
+
+---
+
+# 33. THEME SYSTEM
+
+Modes:
+
+```text
+Dark
+
+Light
+
+System
+```
+
+Default:
+
+```text
+Dark
+```
+
+---
+
+# 34. DESIGN SYSTEM
+
+Style:
+
+```text
+Command Center
+
+SOC
+
+NOC
+
+Enterprise Analytics
+```
+
+---
+
+# 35. RESPONSIVE DESIGN
+
+Support:
+
+```text
+Desktop
+
+Laptop
+
+Tablet
+```
+
+Mobile optional.
+
+Primary target:
+
+```text
+Large Displays
+
+Operations Rooms
+
+Monitoring Centers
+```
+
+---
+
+# 36. CHART COMPONENTS
+
+Use:
+
+```text
+Bar Charts
+
+Line Charts
+
+Area Charts
+
+Pie Charts
+
+Radar Charts
+
+Time Series Charts
+```
+
+---
+
+# 37. DASHBOARD WIDGETS
+
+```text
+KPIs
+
+Alerts
+
+Tables
+
+Trends
+
+Statistics
+
+Live Feeds
+```
+
+---
+
+# 38. NOTIFICATION CENTER
+
+Support:
+
+```text
+Unread
+
+Read
+
+Critical
+
+System
+
+User
+```
+
+Real-time updates via Socket.IO.
+
+---
+
+# 39. REPORTING MODULE
+
+Generate:
+
+```text
+PDF
+
+Excel
+
+CSV
+```
+
+Reports:
+
+```text
+Events
+
+Assets
+
+Threats
+
+Network
+
+Transactions
+```
+
+---
+
+# 40. FRONTEND DEVELOPMENT RULES
+
+Always:
+
+```text
+Component-Based
+
+Reusable
+
+Modular
+
+Lazy Loaded
+
+Socket Driven
+
+Map First Design
+```
+
+Never:
+
+```text
+Hardcode Data
+
+Hardcode Coordinates
+
+Hardcode Filters
+
+Hardcode Layers
+```
+
+Everything must come from APIs or configuration.
+
+---
+
+# PART 2 DELIVERABLE
+
+Frontend must provide:
+
+✅ Enterprise dashboard
+
+✅ Local MapTiler integration
+
+✅ MapLibre rendering
+
+✅ Three.js overlays
+
+✅ Real-time updates
+
+✅ Marker clustering
+
+✅ Heatmaps
+
+✅ Routes
+
+✅ Geofences
+
+✅ Drilldown filtering
+
+✅ Multi-module navigation
+
+✅ Responsive command center UI
+
+---
+
+# NEXT PART
+
+**PART 3 — Backend Architecture, Express Server Design, Socket.IO Architecture, Sequelize Models, Event Ingestion Engine, APIs, Authentication, Authorization, and Real-Time Processing Pipeline**.

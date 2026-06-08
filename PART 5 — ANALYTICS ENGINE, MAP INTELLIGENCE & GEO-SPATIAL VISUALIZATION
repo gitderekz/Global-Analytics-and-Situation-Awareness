@@ -1,0 +1,1057 @@
+# PART 5 — ANALYTICS ENGINE, MAP INTELLIGENCE & GEO-SPATIAL VISUALIZATION
+
+---
+
+# 1. OBJECTIVE
+
+This layer transforms raw data into actionable intelligence.
+
+Raw data:
+
+```text
+Events
+Assets
+Devices
+Threats
+Transactions
+Sensors
+```
+
+becomes:
+
+```text
+Markers
+Clusters
+Heatmaps
+Routes
+Geofences
+Analytics
+Alerts
+Predictions
+```
+
+This is the "brain" of the platform.
+
+---
+
+# 2. ANALYTICS PIPELINE
+
+```text
+Data Source
+      ↓
+Ingestion Engine
+      ↓
+Validation
+      ↓
+Database
+      ↓
+Analytics Engine
+      ↓
+GeoJSON Builder
+      ↓
+Socket.IO
+      ↓
+MapLibre
+      ↓
+Dashboard
+```
+
+---
+
+# 3. MAP INTELLIGENCE LAYER
+
+Purpose:
+
+Convert database records into map-ready objects.
+
+Output:
+
+```text
+GeoJSON
+Markers
+Clusters
+Heatmaps
+Routes
+Geofences
+```
+
+---
+
+# 4. ANALYTICS ENGINE MODULES
+
+```text
+Marker Engine
+
+Cluster Engine
+
+Heatmap Engine
+
+Route Engine
+
+Geofence Engine
+
+Filtering Engine
+
+Aggregation Engine
+
+Prediction Engine (Future)
+```
+
+---
+
+# 5. MARKER ENGINE
+
+Purpose:
+
+Convert objects into map markers.
+
+Input:
+
+```text
+Events
+Assets
+Devices
+Threats
+Users
+```
+
+Output:
+
+```json
+{
+  "id": 1,
+  "lat": -6.7924,
+  "lng": 39.2083,
+  "type": "event"
+}
+```
+
+---
+
+# 6. MARKER TYPES
+
+```text
+Event
+
+Asset
+
+Device
+
+Threat
+
+Transaction
+
+User
+
+Sensor
+```
+
+---
+
+# 7. MARKER VISUAL STATES
+
+```text
+Normal
+
+Selected
+
+Hovered
+
+Highlighted
+
+Alerting
+
+Offline
+```
+
+---
+
+# 8. MARKER ICON SYSTEM
+
+Icons configurable.
+
+Examples:
+
+```text
+Vehicle Icon
+
+Threat Icon
+
+Sensor Icon
+
+User Icon
+
+Camera Icon
+
+Server Icon
+```
+
+---
+
+# 9. MARKER COLORS
+
+```text
+Green
+Active
+
+Blue
+Informational
+
+Yellow
+Warning
+
+Orange
+High Risk
+
+Red
+Critical
+
+Gray
+Offline
+```
+
+---
+
+# 10. CLUSTER ENGINE
+
+Purpose:
+
+Handle thousands of markers efficiently.
+
+---
+
+Use:
+
+```text
+Supercluster
+```
+
+---
+
+# 11. CLUSTER BEHAVIOR
+
+Zoom Out:
+
+```text
+5000 markers
+↓
+50 clusters
+```
+
+Zoom In:
+
+```text
+50 clusters
+↓
+5000 markers
+```
+
+---
+
+# 12. CLUSTER LABELS
+
+Display:
+
+```text
+Count
+
+Severity
+
+Dominant Type
+```
+
+Example:
+
+```text
+125 Events
+
+32 Devices
+
+54 Assets
+```
+
+---
+
+# 13. CLUSTER INTERACTION
+
+Click Cluster:
+
+```text
+Zoom Into Cluster
+```
+
+Hover Cluster:
+
+```text
+Show Summary
+```
+
+---
+
+# 14. HEATMAP ENGINE
+
+Purpose:
+
+Visualize density.
+
+---
+
+Supported Data:
+
+```text
+Threats
+
+Incidents
+
+Events
+
+Transactions
+
+Sensors
+
+Assets
+```
+
+---
+
+# 15. HEATMAP INTENSITY
+
+Calculated using:
+
+```text
+Count
+
+Severity
+
+Frequency
+
+Weight
+```
+
+---
+
+# 16. HEATMAP COLORS
+
+```text
+Blue
+Low
+
+Green
+Medium
+
+Yellow
+High
+
+Orange
+Very High
+
+Red
+Critical
+```
+
+---
+
+# 17. ROUTE ENGINE
+
+Purpose:
+
+Visualize movement.
+
+---
+
+Supported:
+
+```text
+Vehicles
+
+Aircraft
+
+Ships
+
+Drones
+
+Personnel
+```
+
+---
+
+# 18. ROUTE DATA
+
+Source:
+
+```text
+asset_tracks
+```
+
+---
+
+Output:
+
+```text
+GeoJSON LineString
+```
+
+---
+
+# 19. ROUTE FEATURES
+
+```text
+Playback
+
+Animation
+
+History
+
+Speed Visualization
+
+Direction Indicators
+```
+
+---
+
+# 20. ROUTE PLAYBACK
+
+User selects:
+
+```text
+Asset
+```
+
+System displays:
+
+```text
+Movement Timeline
+
+Route Replay
+
+Position History
+```
+
+---
+
+# 21. GEOFENCE ENGINE
+
+Purpose:
+
+Define operational zones.
+
+---
+
+Supported Shapes:
+
+```text
+Circle
+
+Rectangle
+
+Polygon
+```
+
+---
+
+# 22. GEOFENCE EVENTS
+
+Detect:
+
+```text
+Entered Zone
+
+Exited Zone
+
+Stayed Inside
+
+Stayed Outside
+```
+
+---
+
+# 23. GEOFENCE ALERTS
+
+Examples:
+
+```text
+Vehicle left area
+
+Drone entered restricted zone
+
+Device entered maintenance zone
+```
+
+---
+
+# 24. GEO-SPATIAL SEARCH ENGINE
+
+Search:
+
+```text
+Countries
+
+Regions
+
+Cities
+
+Assets
+
+Events
+
+Devices
+```
+
+---
+
+# 25. SEARCH RESULTS
+
+Action:
+
+```text
+Center Map
+
+Zoom Map
+
+Highlight Object
+
+Open Popup
+```
+
+---
+
+# 26. FILTERING ENGINE
+
+Purpose:
+
+Filter all platform data.
+
+---
+
+# 27. GLOBAL FILTERS
+
+```text
+Date
+
+Time
+
+Country
+
+Region
+
+City
+
+Severity
+
+Status
+
+Type
+```
+
+---
+
+# 28. FILTER PROPAGATION
+
+Changing one filter updates:
+
+```text
+Map
+
+Charts
+
+Tables
+
+KPIs
+
+Reports
+```
+
+simultaneously.
+
+---
+
+# 29. GEOGRAPHIC DRILLDOWN ENGINE
+
+Hierarchy:
+
+```text
+World
+
+Continent
+
+Country
+
+Region
+
+City
+
+District
+```
+
+---
+
+# 30. DRILLDOWN BEHAVIOR
+
+Click:
+
+```text
+Africa
+```
+
+Updates:
+
+```text
+Map
+
+Statistics
+
+Events
+
+Assets
+```
+
+---
+
+Click:
+
+```text
+Tanzania
+```
+
+Updates:
+
+```text
+Regional Data
+```
+
+---
+
+Click:
+
+```text
+Dar es Salaam
+```
+
+Updates:
+
+```text
+City Data
+```
+
+---
+
+# 31. AGGREGATION ENGINE
+
+Purpose:
+
+Create KPI summaries.
+
+---
+
+Calculates:
+
+```text
+Total Events
+
+Active Alerts
+
+Active Assets
+
+Connected Devices
+
+Critical Incidents
+```
+
+---
+
+# 32. TIME SERIES ENGINE
+
+Generate:
+
+```text
+Hourly
+
+Daily
+
+Weekly
+
+Monthly
+
+Yearly
+```
+
+analytics.
+
+---
+
+# 33. DASHBOARD KPI ENGINE
+
+Examples:
+
+```text
+Events Today
+
+Assets Online
+
+Threats Detected
+
+Devices Connected
+
+Regions Active
+```
+
+---
+
+# 34. ALERT ANALYTICS ENGINE
+
+Calculates:
+
+```text
+Critical Alerts
+
+Resolved Alerts
+
+Average Resolution Time
+
+Open Incidents
+```
+
+---
+
+# 35. THREAT ANALYTICS ENGINE
+
+For SOC Mode.
+
+Calculates:
+
+```text
+Attack Sources
+
+Attack Targets
+
+Threat Types
+
+Severity Distribution
+```
+
+---
+
+# 36. NETWORK ANALYTICS ENGINE
+
+For NOC Mode.
+
+Calculates:
+
+```text
+Node Status
+
+Outages
+
+Latency
+
+Health Score
+```
+
+---
+
+# 37. FRAUD ANALYTICS ENGINE
+
+Calculates:
+
+```text
+Risk Locations
+
+Suspicious Transactions
+
+Fraud Clusters
+
+Fraud Trends
+```
+
+---
+
+# 38. IOT ANALYTICS ENGINE
+
+Calculates:
+
+```text
+Sensor Status
+
+Offline Devices
+
+Device Health
+
+Telemetry Trends
+```
+
+---
+
+# 39. LIVE TRACKING ENGINE
+
+Purpose:
+
+Move markers in real time.
+
+---
+
+Flow:
+
+```text
+GPS Update
+      ↓
+API
+      ↓
+Database
+      ↓
+Socket.IO
+      ↓
+Map Marker Movement
+```
+
+---
+
+# 40. SOCKET REAL-TIME EVENTS
+
+```text
+event:new
+
+event:update
+
+event:delete
+
+asset:moved
+
+asset:update
+
+device:update
+
+alert:new
+
+alert:update
+```
+
+---
+
+# 41. GEOJSON BUILDER
+
+Backend generates:
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": []
+}
+```
+
+Used directly by MapLibre.
+
+---
+
+# 42. MAPLIBRE DATA SOURCES
+
+```text
+events-source
+
+assets-source
+
+devices-source
+
+routes-source
+
+heatmap-source
+
+geofence-source
+```
+
+---
+
+# 43. MAP LAYERS
+
+```text
+Marker Layer
+
+Cluster Layer
+
+Heatmap Layer
+
+Route Layer
+
+Polygon Layer
+
+3D Layer
+```
+
+---
+
+# 44. THREE.JS ANALYTICS OBJECTS
+
+Display:
+
+```text
+3D Buildings
+
+Factories
+
+Vehicles
+
+Aircraft
+
+Ships
+
+Towers
+
+Infrastructure
+```
+
+---
+
+# 45. THREE.JS EFFECTS
+
+```text
+Radar Sweep
+
+Glow
+
+Pulse
+
+Beam
+
+Route Animation
+
+Particles
+```
+
+---
+
+# 46. DIGITAL TWIN READINESS
+
+Future support:
+
+```text
+Smart Cities
+
+Industrial Plants
+
+Factories
+
+Ports
+
+Airports
+```
+
+---
+
+# 47. PERFORMANCE TARGETS
+
+Must support:
+
+```text
+100,000+ Events
+
+50,000+ Assets
+
+20,000+ Devices
+
+10,000+ Live Updates
+```
+
+---
+
+# 48. PERFORMANCE STRATEGIES
+
+Use:
+
+```text
+GeoJSON Caching
+
+Server Pagination
+
+WebSocket Batching
+
+Marker Clustering
+
+Aggregation Tables
+```
+
+---
+
+# 49. ANALYTICS SERVICE STRUCTURE
+
+```text
+services/
+
+analyticsService.js
+
+markerService.js
+
+clusterService.js
+
+heatmapService.js
+
+routeService.js
+
+geofenceService.js
+
+geojsonService.js
+```
+
+---
+
+# 50. MAP INTELLIGENCE RULE
+
+The map is never just a map.
+
+It is:
+
+```text
+Visualization Layer
+
+Analytics Layer
+
+Monitoring Layer
+
+Control Layer
+
+Decision Layer
+```
+
+Everything displayed on the dashboard must ultimately connect back to geographic intelligence.
+
+---
+
+# PART 5 DELIVERABLE
+
+Analytics Layer must provide:
+
+✅ Marker Engine
+
+✅ Clustering Engine
+
+✅ Heatmap Engine
+
+✅ Route Engine
+
+✅ Geofence Engine
+
+✅ Geographic Search
+
+✅ Geographic Filtering
+
+✅ Drilldown Navigation
+
+✅ KPI Aggregation
+
+✅ SOC Analytics
+
+✅ NOC Analytics
+
+✅ Fraud Analytics
+
+✅ IoT Analytics
+
+✅ Real-Time Asset Tracking
+
+✅ GeoJSON Generation
+
+✅ Three.js Analytics Integration
+
+---
+
+# NEXT PART
+
+**PART 6 — Complete UI/UX Design System, Dashboard Screens, Side Navigation Architecture, Widget Library, Command Center Layouts, Tables, Charts, Forms, Modals, Notifications, Reports, Theme System, and User Experience Specifications.**

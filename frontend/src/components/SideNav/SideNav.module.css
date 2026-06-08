@@ -1,0 +1,75 @@
+.sidenav {
+  width: var(--sidebar-width);
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.2s ease;
+  flex-shrink: 0;
+}
+
+.collapsed {
+  width: var(--sidebar-collapsed);
+}
+
+.toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 12px;
+  text-align: right;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.collapsed .toggle {
+  text-align: center;
+}
+
+.menu {
+  list-style: none;
+  padding: 0 8px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+
+.link:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.active {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: var(--accent) !important;
+}
+
+.icon {
+  font-size: 16px;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.collapsed .label {
+  display: none;
+}

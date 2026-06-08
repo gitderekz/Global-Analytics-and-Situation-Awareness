@@ -1,0 +1,1225 @@
+# PART 4 — DATABASE SCHEMA, GEOSPATIAL DESIGN & DATA RELATIONSHIPS
+
+---
+
+# 1. DATABASE OBJECTIVE
+
+The database must serve as the central repository for:
+
+```text
+Events
+Assets
+Devices
+Users
+Alerts
+Locations
+Analytics
+Geospatial Data
+Audit Logs
+System Configuration
+```
+
+The schema must be generic enough to support:
+
+* SOC
+* NOC
+* Fleet Tracking
+* Smart Cities
+* Fraud Monitoring
+* Emergency Systems
+* IoT Platforms
+
+without redesigning tables.
+
+---
+
+# 2. DATABASE ENGINE
+
+```text
+MySQL 8+
+Sequelize ORM
+```
+
+Database Name:
+
+```text
+global_analytics_platform
+```
+
+---
+
+# 3. DATABASE MODULES
+
+```text
+Authentication
+
+Geography
+
+Monitoring
+
+Assets
+
+Devices
+
+Analytics
+
+Reporting
+
+System
+```
+
+---
+
+# 4. AUTHENTICATION TABLES
+
+---
+
+## roles
+
+```sql
+id
+name
+description
+createdAt
+updatedAt
+```
+
+Examples:
+
+```text
+Super Admin
+Admin
+Operator
+Analyst
+Viewer
+```
+
+---
+
+## permissions
+
+```sql
+id
+name
+description
+createdAt
+updatedAt
+```
+
+Examples:
+
+```text
+create_event
+update_event
+delete_event
+view_reports
+manage_users
+```
+
+---
+
+## role_permissions
+
+```sql
+id
+roleId
+permissionId
+```
+
+---
+
+## users
+
+```sql
+id
+roleId
+
+firstName
+lastName
+
+email
+password
+
+avatar
+
+phone
+
+status
+
+lastLogin
+
+createdAt
+updatedAt
+```
+
+---
+
+# 5. GEOGRAPHIC HIERARCHY
+
+The entire system depends on this hierarchy.
+
+```text
+World
+ ↓
+Continent
+ ↓
+Country
+ ↓
+Region
+ ↓
+City
+ ↓
+District
+```
+
+---
+
+## continents
+
+```sql
+id
+name
+code
+```
+
+---
+
+## countries
+
+```sql
+id
+continentId
+
+name
+code
+
+latitude
+longitude
+```
+
+---
+
+## regions
+
+```sql
+id
+countryId
+
+name
+
+latitude
+longitude
+```
+
+---
+
+## cities
+
+```sql
+id
+regionId
+
+name
+
+latitude
+longitude
+```
+
+---
+
+## districts
+
+```sql
+id
+cityId
+
+name
+
+latitude
+longitude
+```
+
+---
+
+# 6. LOCATION TABLE
+
+Universal location reference.
+
+## locations
+
+```sql
+id
+
+continentId
+countryId
+regionId
+cityId
+districtId
+
+latitude
+longitude
+
+address
+
+createdAt
+updatedAt
+```
+
+Used by:
+
+```text
+Events
+Assets
+Devices
+Alerts
+```
+
+---
+
+# 7. EVENT MODULE
+
+Core monitoring table.
+
+---
+
+## events
+
+```sql
+id
+
+eventType
+
+title
+description
+
+severity
+
+status
+
+source
+
+locationId
+
+latitude
+longitude
+
+startTime
+endTime
+
+metadata
+
+createdBy
+
+createdAt
+updatedAt
+```
+
+---
+
+# 8. EVENT TYPES
+
+Configurable.
+
+Examples:
+
+```text
+Cyber Attack
+
+Fraud
+
+Emergency
+
+Outage
+
+Sensor Alert
+
+Vehicle Incident
+
+Network Failure
+
+Unauthorized Access
+```
+
+---
+
+# 9. EVENT STATUS
+
+```text
+Open
+
+Investigating
+
+In Progress
+
+Resolved
+
+Closed
+```
+
+---
+
+# 10. EVENT SEVERITY
+
+```text
+Info
+
+Low
+
+Medium
+
+High
+
+Critical
+```
+
+---
+
+# 11. ASSET MODULE
+
+---
+
+## assets
+
+```sql
+id
+
+assetType
+
+name
+
+description
+
+status
+
+locationId
+
+latitude
+longitude
+
+speed
+
+heading
+
+altitude
+
+metadata
+
+createdAt
+updatedAt
+```
+
+---
+
+# 12. ASSET TYPES
+
+```text
+Vehicle
+
+Ship
+
+Aircraft
+
+Drone
+
+Container
+
+Worker
+
+Machine
+```
+
+---
+
+# 13. ASSET TRACKING HISTORY
+
+## asset_tracks
+
+```sql
+id
+
+assetId
+
+latitude
+longitude
+
+speed
+
+heading
+
+timestamp
+```
+
+Purpose:
+
+```text
+Historical Playback
+
+Movement Analysis
+
+Route Generation
+```
+
+---
+
+# 14. DEVICE MODULE
+
+---
+
+## devices
+
+```sql
+id
+
+deviceId
+
+name
+
+deviceType
+
+status
+
+locationId
+
+latitude
+longitude
+
+lastSeen
+
+metadata
+```
+
+---
+
+# 15. DEVICE TYPES
+
+```text
+Sensor
+
+Camera
+
+Gateway
+
+Router
+
+Tracker
+
+Server
+```
+
+---
+
+# 16. ALERT MODULE
+
+---
+
+## alerts
+
+```sql
+id
+
+eventId
+
+title
+
+description
+
+severity
+
+status
+
+acknowledgedBy
+
+acknowledgedAt
+
+createdAt
+```
+
+---
+
+# 17. ALERT STATUS
+
+```text
+New
+
+Acknowledged
+
+In Progress
+
+Resolved
+```
+
+---
+
+# 18. ROUTE MODULE
+
+---
+
+## routes
+
+```sql
+id
+
+assetId
+
+name
+
+status
+
+createdAt
+```
+
+---
+
+## route_points
+
+```sql
+id
+
+routeId
+
+latitude
+longitude
+
+sequence
+```
+
+---
+
+# 19. GEOFENCE MODULE
+
+---
+
+## geofences
+
+```sql
+id
+
+name
+
+type
+
+description
+
+active
+
+createdAt
+```
+
+---
+
+Types:
+
+```text
+Circle
+
+Polygon
+
+Rectangle
+```
+
+---
+
+## geofence_points
+
+```sql
+id
+
+geofenceId
+
+latitude
+longitude
+
+sequence
+```
+
+---
+
+# 20. INCIDENT MODULE
+
+---
+
+## incidents
+
+```sql
+id
+
+eventId
+
+title
+
+description
+
+status
+
+assignedTo
+```
+
+---
+
+# 21. CYBER SECURITY MODULE
+
+---
+
+## threats
+
+```sql
+id
+
+eventId
+
+threatType
+
+sourceIp
+
+destinationIp
+
+country
+
+severity
+
+status
+```
+
+---
+
+Examples:
+
+```text
+DDoS
+
+Malware
+
+Phishing
+
+Port Scan
+
+Brute Force
+```
+
+---
+
+# 22. NETWORK MODULE
+
+---
+
+## infrastructure_nodes
+
+```sql
+id
+
+name
+
+nodeType
+
+status
+
+latitude
+longitude
+
+locationId
+```
+
+---
+
+Types:
+
+```text
+Server
+
+Router
+
+Switch
+
+Datacenter
+
+Firewall
+```
+
+---
+
+# 23. FRAUD MONITORING MODULE
+
+---
+
+## transactions
+
+```sql
+id
+
+transactionId
+
+amount
+
+currency
+
+riskLevel
+
+locationId
+
+status
+
+timestamp
+```
+
+---
+
+# 24. IOT MODULE
+
+---
+
+## sensor_readings
+
+```sql
+id
+
+deviceId
+
+metric
+
+value
+
+timestamp
+```
+
+---
+
+# 25. ANALYTICS MODULE
+
+Pre-aggregated dashboard statistics.
+
+---
+
+## analytics_daily
+
+```sql
+id
+
+date
+
+totalEvents
+
+totalAssets
+
+totalAlerts
+
+totalDevices
+```
+
+---
+
+## analytics_monthly
+
+```sql
+id
+
+month
+
+year
+
+totalEvents
+
+totalAssets
+
+totalAlerts
+```
+
+---
+
+# 26. REPORTING MODULE
+
+---
+
+## reports
+
+```sql
+id
+
+name
+
+type
+
+filePath
+
+generatedBy
+
+generatedAt
+```
+
+---
+
+# 27. NOTIFICATIONS MODULE
+
+---
+
+## notifications
+
+```sql
+id
+
+userId
+
+title
+
+message
+
+type
+
+isRead
+
+createdAt
+```
+
+---
+
+# 28. AUDIT LOGS
+
+---
+
+## audit_logs
+
+```sql
+id
+
+userId
+
+action
+
+entity
+
+entityId
+
+oldValue
+
+newValue
+
+timestamp
+```
+
+---
+
+# 29. FILE MANAGEMENT
+
+---
+
+## uploads
+
+```sql
+id
+
+fileName
+
+fileType
+
+filePath
+
+uploadedBy
+
+uploadedAt
+```
+
+---
+
+# 30. SETTINGS MODULE
+
+---
+
+## settings
+
+```sql
+id
+
+key
+
+value
+
+description
+```
+
+Examples:
+
+```text
+theme
+
+default_map_center
+
+default_zoom
+
+alert_threshold
+
+language
+```
+
+---
+
+# 31. SOCKET EVENT STORAGE
+
+Optional history.
+
+---
+
+## socket_events
+
+```sql
+id
+
+eventName
+
+payload
+
+createdAt
+```
+
+---
+
+# 32. GEOJSON STORAGE
+
+Optional.
+
+---
+
+## geojson_layers
+
+```sql
+id
+
+name
+
+type
+
+geojson
+
+createdAt
+```
+
+---
+
+# 33. INDEXING STRATEGY
+
+Create indexes on:
+
+```sql
+latitude
+longitude
+
+locationId
+
+eventType
+
+severity
+
+status
+
+timestamp
+
+assetId
+
+deviceId
+```
+
+---
+
+# 34. HIGH-FREQUENCY INDEXES
+
+Most queried:
+
+```sql
+events.timestamp
+
+events.severity
+
+assets.status
+
+alerts.status
+
+devices.lastSeen
+```
+
+---
+
+# 35. SEQUELIZE MODEL STRUCTURE
+
+```text
+models/
+
+User.js
+Role.js
+Permission.js
+
+Location.js
+
+Event.js
+Alert.js
+
+Asset.js
+AssetTrack.js
+
+Device.js
+
+Route.js
+RoutePoint.js
+
+Geofence.js
+GeofencePoint.js
+
+Threat.js
+
+Transaction.js
+
+SensorReading.js
+
+Notification.js
+
+AuditLog.js
+
+Report.js
+
+Setting.js
+```
+
+---
+
+# 36. KEY ASSOCIATIONS
+
+```text
+Role
+  hasMany Users
+
+User
+  belongsTo Role
+
+Location
+  hasMany Events
+
+Location
+  hasMany Assets
+
+Location
+  hasMany Devices
+
+Event
+  hasMany Alerts
+
+Asset
+  hasMany AssetTracks
+
+Route
+  hasMany RoutePoints
+
+Geofence
+  hasMany GeofencePoints
+
+Device
+  hasMany SensorReadings
+```
+
+---
+
+# 37. PERFORMANCE STRATEGY
+
+Hot tables:
+
+```text
+events
+
+asset_tracks
+
+sensor_readings
+```
+
+These grow rapidly.
+
+Implement:
+
+```text
+Pagination
+
+Date Filtering
+
+Aggregation Tables
+
+Background Jobs
+```
+
+---
+
+# 38. DATA RETENTION
+
+Recommended:
+
+```text
+Raw Events
+2 Years
+
+Asset Tracks
+1 Year
+
+Sensor Readings
+6 Months
+
+Audit Logs
+3 Years
+```
+
+Configurable.
+
+---
+
+# 39. FUTURE SCALABILITY
+
+Database design must support:
+
+```text
+Multi-Tenant
+
+Multiple Organizations
+
+Multiple Projects
+
+Regional Data Segregation
+
+Sharding
+```
+
+without major schema changes.
+
+---
+
+# PART 4 DELIVERABLE
+
+Database must provide:
+
+✅ Geographic hierarchy
+
+✅ Universal location model
+
+✅ Event storage
+
+✅ Asset tracking
+
+✅ Route history
+
+✅ Geofencing
+
+✅ Device management
+
+✅ Cyber threat monitoring
+
+✅ Fraud monitoring
+
+✅ Analytics aggregation
+
+✅ Audit logs
+
+✅ Notifications
+
+✅ Reporting
+
+✅ High-performance indexing
+
+✅ Sequelize-ready schema
+
+---
+
+# NEXT PART
+
+**PART 5 — Analytics Engine, Marker Engine, Clustering Engine, Heatmap Engine, Geofence Engine, Route Visualization Engine, Geographic Filtering, Drill-Down Logic, and Advanced Map Intelligence Architecture.**

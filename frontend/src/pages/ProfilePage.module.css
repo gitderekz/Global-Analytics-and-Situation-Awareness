@@ -1,0 +1,61 @@
+.page {
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 auto 16px;
+}
+
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.role {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.details {
+  margin-top: 24px;
+  text-align: left;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 13px;
+}
+
+.label {
+  color: var(--text-secondary);
+}
+
+.status {
+  color: var(--success);
+  text-transform: capitalize;
+}
