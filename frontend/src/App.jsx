@@ -16,6 +16,7 @@ import EmergencyPage from './pages/EmergencyPage';
 import ReportsPage from './pages/ReportsPage';
 import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
+import AdminPage from './pages/AdminPage';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuthStore();
@@ -56,6 +57,7 @@ export default function App() {
         <Route path="iot" element={<IoTPage />} />
         <Route path="emergency" element={<EmergencyPage />} />
         <Route path="reports" element={<ReportsPage />} />
+        <Route path="admin" element={<AdminPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="profile" element={<ProfilePage />} />
       </Route>

@@ -51,3 +51,18 @@
 .cluster:hover {
   transform: scale(1.1);
 }
+
+.offlineBanner {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid var(--warning);
+  color: var(--warning);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  z-index: 10;
+  white-space: nowrap;
+}

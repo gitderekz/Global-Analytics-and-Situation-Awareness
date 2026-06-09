@@ -48,6 +48,8 @@ const seed = async () => {
       { key: 'default_map_center', value: JSON.stringify([20, 0]), description: 'Default map center [lng, lat]' },
       { key: 'default_zoom', value: '2', description: 'Default map zoom level' },
       { key: 'map_server_url', value: process.env.MAP_SERVER_URL || 'http://localhost:3650', description: 'MapTiler server URL' },
+      { key: 'smtp_enabled', value: 'false', description: 'Enable email notifications' },
+      { key: 'sms_enabled', value: 'false', description: 'Enable SMS notifications' },
     ]);
 
     const events = await db.Event.bulkCreate([
@@ -94,6 +96,23 @@ const seed = async () => {
       { transactionId: 'TXN-10002', amount: 250, currency: 'USD', riskLevel: 'Low', latitude: 40.7128, longitude: -74.0060, status: 'approved' },
       { transactionId: 'TXN-10003', amount: 8500, currency: 'EUR', riskLevel: 'Critical', latitude: 48.8566, longitude: 2.3522, status: 'blocked' },
     ]);
+
+    const geofence = await db.Geofence.create({ name: 'Dar es Salaam Port Zone', type: 'Polygon', description: 'Operational port area', active: true });
+    await db.GeofencePoint.bulkCreate([
+      { geofenceId: geofence.id, latitude: -6.8200, longitude: 39.2600, sequence: 0 },
+      { geofenceId: geofence.id, latitude: -6.8200, longitude: 39.3000, sequence: 1 },
+      { geofenceId: geofence.id, latitude: -6.8500, longitude: 39.3000, sequence: 2 },
+      { geofenceId: geofence.id, latitude: -6.8500, longitude: 39.2600, sequence: 3 },
+    ]);
+
+    const assets = await db.Asset.findAll({ limit: 2 });
+    if (assets[0]) {
+      await db.AssetTrack.bulkCreate([
+        { assetId: assets[0].id, latitude: -6.7924, longitude: 39.2083, speed: 40, timestamp: new Date(Date.now() - 3600000) },
+        { assetId: assets[0].id, latitude: -6.8000, longitude: 39.2200, speed: 45, timestamp: new Date(Date.now() - 1800000) },
+        { assetId: assets[0].id, latitude: -6.8100, longitude: 39.2350, speed: 42, timestamp: new Date() },
+      ]);
+    }
 
     console.log('Seed completed successfully');
     console.log('Login: admin@analytics.local / admin123');

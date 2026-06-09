@@ -10,6 +10,7 @@ const db = require('./models');
 const routes = require('./routes');
 const { setupSocket } = require('./socket/socketServer');
 const logger = require('./utils/logger');
+const { sanitizeBody } = require('./middlewares/sanitize');
 
 const eventController = require('./controllers/eventController');
 const assetController = require('./controllers/assetController');
@@ -36,6 +37,7 @@ app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:5173', credentials: true }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(sanitizeBody);
 
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000,

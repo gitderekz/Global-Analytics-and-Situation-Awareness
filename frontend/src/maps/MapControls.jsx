@@ -10,6 +10,9 @@ export default function MapControls() {
     { key: 'devices', label: 'Devices' },
     { key: 'clusters', label: 'Clusters' },
     { key: 'heatmap', label: 'Heatmap' },
+    { key: 'routes', label: 'Routes' },
+    { key: 'geofences', label: 'Geofences' },
+    { key: 'threejs', label: '3D View' },
   ];
 
   return (

@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const analyticsController = require('../controllers/analyticsController');
+const adminController = require('../controllers/adminController');
 const { authenticate } = require('../middlewares/auth');
 
+router.get('/heatmap', authenticate, adminController.getHeatmapGeoJSON);
+router.get('/routes', authenticate, adminController.getRoutesGeoJSON);
+router.get('/geofences', authenticate, adminController.getGeofencesGeoJSON);
 router.get('/kpis', authenticate, analyticsController.getKPIs);
 router.get('/severity', authenticate, analyticsController.getSeverityDistribution);
 router.get('/event-types', authenticate, analyticsController.getEventTypes);

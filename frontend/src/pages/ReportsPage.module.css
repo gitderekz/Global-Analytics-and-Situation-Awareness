@@ -54,11 +54,17 @@
   color: var(--accent);
 }
 
-.note {
-  margin-top: 24px;
-  padding: 16px;
-  background: var(--bg-tertiary);
+.message {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid var(--accent);
   border-radius: 8px;
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--accent);
+}
+
+.formatBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

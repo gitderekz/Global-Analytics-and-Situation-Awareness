@@ -16,6 +16,7 @@ export const useMapStore = create((set) => ({
     heatmap: false,
     routes: false,
     geofences: false,
+    threejs: false,
   },
 
   setView: (view) => set(view),

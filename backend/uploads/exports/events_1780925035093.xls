@@ -1,0 +1,9 @@
+id	eventType	title	severity	status	country	city	latitude	longitude	createdAt
+8	Asset Movement	Container Deviation	Low	Open	Singapore	Singapore	1.3521000	103.8198000	Mon Jun 08 2026 11:35:30 GMT+0300 (East Africa Time)
+7	Unauthorized Access	Failed Login Attempts	Medium	Resolved	Russia	Moscow	55.7558000	37.6173000	Mon Jun 08 2026 11:35:30 GMT+0300 (East Africa Time)
+6	Emergency	Flood Warning	Critical	Open	Tanzania	Dar es Salaam	-6.8160000	39.2803000	Mon Jun 08 2026 11:35:30 GMT+0300 (East Africa Time)
+5	Fraud	Suspicious Transaction Cluster	High	Open	United Kingdom	London	51.5074000	-0.1278000	Mon Jun 08 2026 11:35:30 GMT+0300 (East Africa Time)
+4	Traffic Incident	Highway Collision	High	In Progress	Kenya	Nairobi	-1.2921000	36.8219000	Mon Jun 08 2026 11:35:30 GMT+0300 (East Africa Time)
+3	Sensor Alert	Temperature Threshold Exceeded	Medium	Open	Tanzania	Dar es Salaam	-6.7924000	39.2083000	Mon Jun 08 2026 11:35:30 GMT+0300 (East Africa Time)
+2	Network Outage	Router Failure - NYC	High	Investigating	United States	New York	40.7128000	-74.0060000	Mon Jun 08 2026 11:35:30 GMT+0300 (East Africa Time)
+1	Cyber Attack	DDoS Attack Detected	Critical	Open	China	Beijing	39.9042000	116.4074000	Mon Jun 08 2026 11:35:30 GMT+0300 (East Africa Time)

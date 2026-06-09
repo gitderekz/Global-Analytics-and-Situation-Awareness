@@ -13,6 +13,7 @@ const modules = [
   { path: '/iot', label: 'IoT Monitoring', icon: '📡' },
   { path: '/emergency', label: 'Emergency Response', icon: '🚨' },
   { path: '/reports', label: 'Reports', icon: '📊' },
+  { path: '/admin', label: 'Data Management', icon: '🗄' },
   { path: '/settings', label: 'Settings', icon: '⚙' },
 ];
 
