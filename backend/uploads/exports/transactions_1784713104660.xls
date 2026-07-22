@@ -1,0 +1,4 @@
+id	transactionId	amount	currency	riskLevel	status	timestamp
+3	TXN-10003	8500.00	EUR	Critical	blocked	Mon Jun 08 2026 16:46:13 GMT+0300 (East Africa Time)
+2	TXN-10002	250.00	USD	Low	approved	Mon Jun 08 2026 16:46:13 GMT+0300 (East Africa Time)
+1	TXN-10001	15000.00	USD	High	flagged	Mon Jun 08 2026 16:46:13 GMT+0300 (East Africa Time)

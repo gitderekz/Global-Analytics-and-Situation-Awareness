@@ -38,7 +38,9 @@ db.Notification = require('./Notification')(sequelize);
 db.AuditLog = require('./AuditLog')(sequelize);
 db.Report = require('./Report')(sequelize);
 db.Setting = require('./Setting')(sequelize);
+db.RefreshToken = require('./RefreshToken')(sequelize);
 db.AnalyticsDaily = require('./AnalyticsDaily')(sequelize);
+db.SocketEvent = require('./SocketEvent')(sequelize);
 
 // Associations
 db.Role.hasMany(db.User, { foreignKey: 'roleId' });
@@ -49,6 +51,12 @@ db.Permission.belongsToMany(db.Role, { through: db.RolePermission, foreignKey: '
 
 db.User.hasMany(db.AuditLog, { foreignKey: 'userId' });
 db.AuditLog.belongsTo(db.User, { foreignKey: 'userId' });
+
+db.User.hasMany(db.RefreshToken, { foreignKey: 'userId' });
+db.RefreshToken.belongsTo(db.User, { foreignKey: 'userId' });
+
+db.User.hasMany(db.SocketEvent, { foreignKey: 'userId' });
+db.SocketEvent.belongsTo(db.User, { foreignKey: 'userId' }, { allowNull: true });
 
 db.Continent.hasMany(db.Country, { foreignKey: 'continentId' });
 db.Country.belongsTo(db.Continent, { foreignKey: 'continentId' });

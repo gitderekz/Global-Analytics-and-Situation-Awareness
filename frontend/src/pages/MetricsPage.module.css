@@ -1,0 +1,63 @@
+.page {
+  padding: 18px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.header h2 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.header p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.card h3 {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.card p,
+.card ul {
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card li {
+  margin-bottom: 6px;
+}
+
+.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: var(--danger);
+  padding: 14px 16px;
+  border-radius: 10px;
+}
+
+.loading {
+  padding: 24px;
+  color: var(--text-muted);
+}

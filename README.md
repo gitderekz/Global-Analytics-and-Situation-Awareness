@@ -117,13 +117,39 @@ docs/             Documentation
 
 ## MapTiler Setup
 
-Install MapTiler Server and place MBTiles in `/map-data/`. Default style URL:
+The platform supports both self-hosted MapTiler Server and offline MBTiles mode.
 
-```
-http://localhost:3650/styles/basic/style.json
+1. Start the platform with Docker Compose:
+   ```bash
+   docker-compose up -d mysql redis backend frontend nginx maptiler
+   ```
+2. Upload an `.mbtiles` file from the Settings page, or place it directly into `backend/uploads/mbtiles/tiles.mbtiles`.
+3. MapTiler Server will expose the default style at:
+   ```
+   http://localhost:3650/styles/basic/style.json
+   ```
+
+### Notes
+- `MapTiler` uses `./uploads/mbtiles` as the data directory in the Docker Compose setup.
+- Offline mode uses the backend tile service at `/api/v1/tiles/{z}/{x}/{y}.png`.
+- If MapTiler is unavailable, the frontend falls back to OpenStreetMap raster tiles and can also use MBTiles in offline mode.
+
+### Test commands
+
+Run backend unit tests:
+```bash
+cd backend && npm test
 ```
 
-If MapTiler is unavailable, the frontend automatically falls back to OpenStreetMap raster tiles.
+Run frontend unit tests:
+```bash
+cd frontend && npm test
+```
+
+Run frontend E2E smoke tests:
+```bash
+cd frontend && npm run test:e2e
+```
 
 ## Development Phases
 

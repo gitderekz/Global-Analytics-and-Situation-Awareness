@@ -154,9 +154,9 @@ exports.getSchema = (req, res) => {
         { key: 'firstName', label: 'First Name', type: 'text', required: true },
         { key: 'lastName', label: 'Last Name', type: 'text', required: true },
         { key: 'email', label: 'Email', type: 'email', required: true },
-        { key: 'password', label: 'Password', type: 'password' },
-        { key: 'roleId', label: 'Role ID', type: 'number', required: true },
-        { key: 'status', label: 'Status', type: 'select', options: ['active', 'inactive', 'suspended'] },
+        { key: 'password', label: 'Password', type: 'password', roles: ['Super Admin', 'Admin'] },
+        { key: 'roleId', label: 'Role ID', type: 'number', required: true, roles: ['Super Admin'] },
+        { key: 'status', label: 'Status', type: 'select', options: ['active', 'inactive', 'suspended'], roles: ['Super Admin', 'Admin'] },
         { key: 'phone', label: 'Phone', type: 'text' },
       ],
     },
@@ -255,6 +255,120 @@ exports.getGeofencesGeoJSON = async (req, res) => {
       .filter((g) => g.GeofencePoints?.length >= 3)
       .map((g) => buildPolygon(g.GeofencePoints, { id: g.id, name: g.name, type: g.type }));
     return success(res, { type: 'FeatureCollection', features });
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
+};
+
+exports.getGeofencePoints = async (req, res) => {
+  try {
+    const geofenceId = req.params.id;
+    if (!geofenceId) return error(res, 'Geofence ID required', 400);
+    const points = await db.GeofencePoint.findAll({ where: { geofenceId }, order: [['sequence', 'ASC']] });
+    return success(res, points);
+  } catch (err) {
+    return error(res, err.message, 500);
+  }
+};
+
+exports.seedDemoData = async (req, res) => {
+  try {
+    const roleNames = ['Super Admin', 'Admin', 'Operator', 'Analyst', 'Viewer'];
+    const roles = {};
+    for (const name of roleNames) {
+      const [role] = await db.Role.findOrCreate({ where: { name }, defaults: { description: `${name} role` } });
+      roles[name] = role;
+    }
+
+    const [adminUser] = await db.User.findOrCreate({
+      where: { email: 'admin@analytics.local' },
+      defaults: {
+        firstName: 'System',
+        lastName: 'Admin',
+        email: 'admin@analytics.local',
+        password: await bcrypt.hash('admin123', 10),
+        status: 'active',
+        roleId: roles['Super Admin'].id,
+      },
+    });
+
+    const initialSeed = {
+      events: 0,
+      assets: 0,
+      devices: 0,
+      alerts: 0,
+      threats: 0,
+      transactions: 0,
+      geofences: 0,
+      tracks: 0,
+    };
+
+    if ((await db.Event.count()) === 0) {
+      await db.Event.bulkCreate([
+        { eventType: 'Cyber Attack', title: 'DDoS Attack Detected', description: 'Distributed denial of service attack from external source', severity: 'Critical', status: 'Open', source: 'SOC', latitude: 39.9042, longitude: 116.4074, country: 'China', city: 'Beijing', startTime: new Date() },
+        { eventType: 'Network Outage', title: 'Router Failure - NYC', description: 'Core router offline in New York datacenter', severity: 'High', status: 'Investigating', source: 'NOC', latitude: 40.7128, longitude: -74.0060, country: 'United States', city: 'New York', startTime: new Date() },
+        { eventType: 'Sensor Alert', title: 'Temperature Threshold Exceeded', description: 'Industrial sensor reading above safe limit', severity: 'Medium', status: 'Open', source: 'IoT', latitude: -6.7924, longitude: 39.2083, country: 'Tanzania', city: 'Dar es Salaam', startTime: new Date() },
+      ]);
+      initialSeed.events += 3;
+    }
+
+    if ((await db.Asset.count()) === 0) {
+      await db.Asset.bulkCreate([
+        { assetType: 'Vehicle', name: 'Fleet Truck Alpha', status: 'active', latitude: -6.7924, longitude: 39.2083, speed: 45.5, heading: 180 },
+        { assetType: 'Aircraft', name: 'Cargo Flight TZ-401', status: 'active', latitude: -1.5, longitude: 35.0, speed: 850, heading: 45, altitude: 10000 },
+      ]);
+      initialSeed.assets += 2;
+    }
+
+    if ((await db.Device.count()) === 0) {
+      await db.Device.bulkCreate([
+        { deviceId: 'SENS-001', name: 'Temp Sensor Warehouse A', deviceType: 'Sensor', status: 'online', latitude: -6.7924, longitude: 39.2083, lastSeen: new Date() },
+        { deviceId: 'CAM-042', name: 'Security Camera Gate 3', deviceType: 'Camera', status: 'online', latitude: -6.8160, longitude: 39.2803, lastSeen: new Date() },
+      ]);
+      initialSeed.devices += 2;
+    }
+
+    if ((await db.Alert.count()) === 0) {
+      const event = await db.Event.findOne();
+      if (event) {
+        await db.Alert.create({ eventId: event.id, title: 'Critical Incident', description: event.description, severity: 'Critical', status: 'New' });
+        initialSeed.alerts += 1;
+      }
+    }
+
+    if ((await db.Threat.count()) === 0) {
+      const event = await db.Event.findOne();
+      if (event) {
+        await db.Threat.create({ eventId: event.id, threatType: 'Brute Force', sourceIp: '198.51.100.22', destinationIp: '10.0.0.5', country: event.country || 'Unknown', severity: 'Medium', status: 'active' });
+        initialSeed.threats += 1;
+      }
+    }
+
+    if ((await db.Transaction.count()) === 0) {
+      await db.Transaction.bulkCreate([
+        { transactionId: 'TXN-10001', amount: 15000, currency: 'USD', riskLevel: 'High', status: 'flagged' },
+        { transactionId: 'TXN-10002', amount: 250, currency: 'USD', riskLevel: 'Low', status: 'approved' },
+      ]);
+      initialSeed.transactions += 2;
+    }
+
+    if ((await db.Geofence.count()) === 0) {
+      const geofence = await db.Geofence.create({ name: 'Dar es Salaam Port Zone', type: 'Polygon', description: 'Operational port area', active: true });
+      await db.GeofencePoint.bulkCreate([
+        { geofenceId: geofence.id, latitude: -6.8200, longitude: 39.2600, sequence: 0 },
+        { geofenceId: geofence.id, latitude: -6.8200, longitude: 39.3000, sequence: 1 },
+        { geofenceId: geofence.id, latitude: -6.8500, longitude: 39.3000, sequence: 2 },
+        { geofenceId: geofence.id, latitude: -6.8500, longitude: 39.2600, sequence: 3 },
+      ]);
+      initialSeed.geofences += 1;
+      initialSeed.tracks += 4;
+    }
+
+    return success(res, {
+      user: { email: adminUser.email },
+      seeded: initialSeed,
+      roles: roleNames,
+    }, 'Demo data populated successfully');
   } catch (err) {
     return error(res, err.message, 500);
   }

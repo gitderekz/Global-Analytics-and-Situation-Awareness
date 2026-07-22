@@ -1,0 +1,53 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.dialog {
+  width: 900px;
+  max-width: 95%;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+.body {
+  display: flex;
+  gap: 12px;
+}
+.map {
+  width: 65%;
+  height: 420px;
+}
+.sidebar {
+  padding: 12px;
+  width: 35%;
+  box-sizing: border-box;
+}
+.instructions {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+.pointsList {
+  list-style: decimal;
+  padding-left: 18px;
+  max-height: 350px;
+  overflow: auto;
+}
+.pointsList li {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pointsList .del {
+  margin-left: 8px;
+}
+.actions { 
+  padding: 8px 12px; 
+  text-align: right; 
+}

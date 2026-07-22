@@ -10,6 +10,7 @@ const analyticsRoutes = require('./analytics');
 const geographyRoutes = require('./geography');
 const adminRoutes = require('./admin');
 const reportRoutes = require('./reports');
+const tilesRoutes = require('./tiles');
 
 router.use('/auth', authRoutes);
 router.use('/events', eventRoutes);
@@ -20,6 +21,7 @@ router.use('/analytics', analyticsRoutes);
 router.use('/geography', geographyRoutes);
 router.use('/admin', adminRoutes);
 router.use('/reports', reportRoutes);
+router.use('/tiles', tilesRoutes);
 
 router.get('/health', (req, res) => {
   res.json({ success: true, message: 'API healthy', data: { status: 'healthy', timestamp: new Date().toISOString() } });

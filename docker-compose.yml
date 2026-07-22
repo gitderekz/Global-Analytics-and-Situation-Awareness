@@ -40,9 +40,13 @@ services:
       JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-change-refresh-in-production}
       CORS_ORIGIN: http://localhost:5173
       MAP_SERVER_URL: http://maptiler:3650
+      REDIS_URL: redis://redis:6379
+      MBTILES_PATH: /app/uploads/mbtiles/tiles.mbtiles
     depends_on:
       mysql:
         condition: service_healthy
+      redis:
+        condition: service_started
     volumes:
       - ./backend/uploads:/app/uploads
       - ./backend/logs:/app/logs
@@ -57,6 +61,34 @@ services:
       - '5173:80'
     depends_on:
       - backend
+
+  redis:
+    image: redis:7-alpine
+    container_name: gap-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  maptiler:
+    image: maptiler/tileserver-gl
+    container_name: gap-maptiler
+    restart: unless-stopped
+    ports:
+      - '3650:3650'
+    volumes:
+      - ./uploads/mbtiles:/data
+    environment:
+      - TILESERVER_PORT=3650
+    healthcheck:
+      test: ['CMD-SHELL', 'node -e "require(\'http\').get(\'http://localhost:3650\', () => process.exit(0)).on(\'error\', () => process.exit(1))"']
+      interval: 15s
+      timeout: 5s
+      retries: 5
 
   nginx:
     image: nginx:alpine

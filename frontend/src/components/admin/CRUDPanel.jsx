@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import api from '../../services/api';
+import { useAuthStore } from '../../store/authStore';
 import DataTable from '../../widgets/DataTable';
 import styles from './CRUDPanel.module.css';
+import GeofenceEditor from './GeofenceEditor';
 
 export default function CRUDPanel({ entityKey, schema, canWrite, canDelete }) {
   const [items, setItems] = useState([]);
@@ -12,8 +14,15 @@ export default function CRUDPanel({ entityKey, schema, canWrite, canDelete }) {
   const [form, setForm] = useState({});
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [showGeofenceEditor, setShowGeofenceEditor] = useState(false);
 
-  const endpoint = schema.endpoint;
+  const { user } = useAuthStore();
+  const role = user?.Role?.name || user?.role || 'Viewer';
+  const endpoint = schema.endpoint || `/admin/${entityKey}`;
+  const visibleFields = schema.fields.filter((field) => {
+    if (!field.roles || field.roles.length === 0) return true;
+    return field.roles.includes(role);
+  });
 
   const fetchItems = useCallback(async () => {
     setLoading(true);
@@ -35,7 +44,7 @@ export default function CRUDPanel({ entityKey, schema, canWrite, canDelete }) {
 
   const openCreate = () => {
     const initial = {};
-    schema.fields.forEach((f) => {
+    visibleFields.forEach((f) => {
       if (f.type === 'checkbox') initial[f.key] = false;
       else if (f.options) initial[f.key] = f.options[0];
     });
@@ -46,7 +55,7 @@ export default function CRUDPanel({ entityKey, schema, canWrite, canDelete }) {
 
   const openEdit = (row) => {
     const editForm = {};
-    schema.fields.forEach((f) => {
+    visibleFields.forEach((f) => {
       editForm[f.key] = row[f.key] ?? (f.type === 'checkbox' ? false : '');
     });
     setForm({ ...editForm, id: row.id });
@@ -86,7 +95,7 @@ export default function CRUDPanel({ entityKey, schema, canWrite, canDelete }) {
 
   const columns = [
     { key: 'id', label: 'ID' },
-    ...schema.fields.slice(0, 5).map((f) => ({ key: f.key, label: f.label })),
+    ...visibleFields.slice(0, 5).map((f) => ({ key: f.key, label: f.label })),
     {
       key: 'actions',
       label: 'Actions',
@@ -130,7 +139,7 @@ export default function CRUDPanel({ entityKey, schema, canWrite, canDelete }) {
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <h3>{modal === 'create' ? `Create ${schema.label.slice(0, -1)}` : `Edit ${schema.label.slice(0, -1)}`}</h3>
             <div className={styles.form}>
-              {schema.fields.map((field) => (
+              {visibleFields.map((field) => (
                 <div key={field.key} className={styles.field}>
                   <label>{field.label}{field.required && ' *'}</label>
                   {field.type === 'textarea' ? (
@@ -169,12 +178,23 @@ export default function CRUDPanel({ entityKey, schema, canWrite, canDelete }) {
             {error && <div className={styles.error}>{error}</div>}
             <div className={styles.modalActions}>
               <button className={styles.cancelBtn} onClick={() => setModal(null)}>Cancel</button>
+              {entityKey === 'geofences' && modal === 'edit' && (
+                <button className={styles.secondaryBtn} onClick={() => setShowGeofenceEditor(true)}>Edit Points</button>
+              )}
               <button className={styles.saveBtn} onClick={handleSave} disabled={saving}>
                 {saving ? 'Saving...' : 'Save'}
               </button>
             </div>
           </div>
         </div>
+      )}
+      {showGeofenceEditor && (
+        <GeofenceEditor
+          geofenceId={form.id}
+          open={showGeofenceEditor}
+          onClose={() => setShowGeofenceEditor(false)}
+          onChange={() => { setShowGeofenceEditor(false); fetchItems(); }}
+        />
       )}
     </div>
   );

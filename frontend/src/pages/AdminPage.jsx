@@ -56,6 +56,36 @@ export default function AdminPage() {
           Role: <strong>{role}</strong>
           {!canWrite && <span className={styles.readOnly}>Read-only</span>}
         </div>
+        {canWrite && (
+          <div className={styles.seedArea}>
+            <button
+              type="button"
+              className={styles.seedButton}
+              onClick={async () => {
+                if (!window.confirm('This will populate sample demo data without resetting existing records. Continue?')) return;
+                try {
+                  const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1'}/admin/demo/seed`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
+                  });
+                  const result = await response.json();
+                  if (result.success) {
+                    alert('Demo data seeded successfully. Refresh the admin panel to see new records.');
+                  } else {
+                    alert(`Seed failed: ${result.message}`);
+                  }
+                } catch (err) {
+                  alert('Demo seed request failed.');
+                }
+              }}
+            >
+              Seed Demo Data
+            </button>
+          </div>
+        )}
       </div>
       <div className={styles.content}>
         {activeSchema ? (

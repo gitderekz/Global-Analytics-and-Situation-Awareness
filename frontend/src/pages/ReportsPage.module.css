@@ -68,3 +68,19 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.preview {
+  margin-top: 24px;
+}
+
+.preview h3 {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.preview iframe {
+  width: 100%;
+  height: 640px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}

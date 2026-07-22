@@ -1,10 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { User, Role, AuditLog } = require('../models');
+const { User, Role, AuditLog, RefreshToken } = require('../models');
 const { success, error } = require('../utils/response');
 
 const generateTokens = (user) => {
-  const payload = { id: user.id, email: user.email, roleId: user.roleId };
+  const payload = { id: user.id, email: user.email, roleId: user.roleId, role: user.Role?.name || user.role || 'Viewer' };
   const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN || '1h',
   });
@@ -12,6 +12,11 @@ const generateTokens = (user) => {
     expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
   });
   return { accessToken, refreshToken };
+};
+
+const storeRefreshToken = async (userId, token) => {
+  const expiresAt = new Date(Date.now() + (parseInt(process.env.JWT_REFRESH_EXPIRES_IN_SECONDS || 7 * 24 * 60 * 60, 10) * 1000));
+  return RefreshToken.create({ userId, token, expiresAt });
 };
 
 exports.login = async (req, res) => {
@@ -35,6 +40,7 @@ exports.login = async (req, res) => {
     await AuditLog.create({ userId: user.id, action: 'login', entity: 'user', entityId: user.id });
 
     const tokens = generateTokens(user);
+    await storeRefreshToken(user.id, tokens.refreshToken);
     const userData = user.toJSON();
     delete userData.password;
 
@@ -50,6 +56,11 @@ exports.refresh = async (req, res) => {
     if (!refreshToken) return error(res, 'Refresh token required', 400);
 
     const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    const stored = await RefreshToken.findOne({ where: { token: refreshToken, revoked: false } });
+    if (!stored || new Date(stored.expiresAt) < new Date()) {
+      return error(res, 'Refresh token revoked or expired', 401);
+    }
+
     const user = await User.findByPk(decoded.id, {
       include: [{ model: Role, attributes: ['id', 'name'] }],
     });
@@ -58,7 +69,10 @@ exports.refresh = async (req, res) => {
       return error(res, 'Invalid refresh token', 401);
     }
 
+    stored.revoked = true;
+    await stored.save();
     const tokens = generateTokens(user);
+    await storeRefreshToken(user.id, tokens.refreshToken);
     return success(res, tokens, 'Token refreshed');
   } catch (err) {
     return error(res, 'Invalid refresh token', 401);
@@ -76,5 +90,8 @@ exports.logout = async (req, res) => {
     entity: 'user',
     entityId: req.user.id,
   });
+  const refreshToken = req.body?.refreshToken;
+  const where = refreshToken ? { token: refreshToken } : { userId: req.user.id };
+  await RefreshToken.update({ revoked: true }, { where });
   return success(res, null, 'Logged out');
 };

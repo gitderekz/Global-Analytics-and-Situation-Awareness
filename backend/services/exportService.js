@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const PDFDocument = require('pdfkit');
 const db = require('../models');
 
 const exportsDir = path.join(__dirname, '..', 'uploads', 'exports');
@@ -87,19 +88,36 @@ const generatePDF = async (type, userId) => {
   if (!config) throw new Error(`Unknown report type: ${type}`);
 
   const rows = await config.model.findAll({ limit: 500, order: [['id', 'DESC']], raw: true });
-  const lines = [
-    `Global Analytics Platform - ${type.toUpperCase()} Report`,
-    `Generated: ${new Date().toISOString()}`,
-    `Total Records: ${rows.length}`,
-    '',
-    config.columns.join(' | '),
-    '-'.repeat(80),
-    ...rows.map((row) => config.columns.map((c) => String(row[c] ?? '')).join(' | ')),
-  ];
-  const content = lines.join('\n');
-  const fileName = `${type}_${Date.now()}.txt`;
+  const fileName = `${type}_${Date.now()}.pdf`;
   const filePath = path.join(exportsDir, fileName);
-  fs.writeFileSync(filePath, content);
+
+  const doc = new PDFDocument({ size: 'A4', margin: 48 });
+  const stream = fs.createWriteStream(filePath);
+  doc.pipe(stream);
+
+  doc.fontSize(18).text(`Global Analytics Platform - ${type.toUpperCase()} Report`, { underline: true });
+  doc.moveDown(0.5);
+  doc.fontSize(10).text(`Generated: ${new Date().toISOString()}`);
+  doc.text(`Total Records: ${rows.length}`);
+  doc.moveDown();
+
+  doc.fontSize(11).fillColor('#333');
+  doc.text(config.columns.join(' | '));
+  doc.moveDown(0.25);
+  doc.text('-'.repeat(80));
+  doc.moveDown(0.5);
+
+  rows.forEach((row) => {
+    const rowText = config.columns.map((c) => String(row[c] ?? '')).join(' | ');
+    doc.text(rowText, { lineGap: 2 });
+  });
+
+  doc.end();
+
+  await new Promise((resolve, reject) => {
+    stream.on('finish', resolve);
+    stream.on('error', reject);
+  });
 
   await db.Report.create({
     name: `${type} report`,
@@ -109,7 +127,7 @@ const generatePDF = async (type, userId) => {
     generatedAt: new Date(),
   });
 
-  return { fileName, filePath, content };
+  return { fileName, filePath };
 };
 
 module.exports = { generateCSV, generateExcel, generatePDF, generateJSON, exportsDir };

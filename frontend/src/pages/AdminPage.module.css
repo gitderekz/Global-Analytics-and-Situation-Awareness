@@ -85,3 +85,26 @@
   text-align: center;
   color: var(--text-muted);
 }
+
+.seedArea {
+  padding: 16px;
+  border: 1px dashed var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-tertiary);
+  margin: 16px;
+}
+
+.seedButton {
+  margin-top: 12px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.seedButton:hover {
+  opacity: 0.95;
+}

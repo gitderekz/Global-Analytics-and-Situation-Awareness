@@ -1,0 +1,36 @@
+# Project TODO
+
+- [x] CRUD Admin UI for all models
+- [x] Verify & complete CRUD APIs
+- [x] Geofence point editor UI
+- [x] Geofence backend endpoints
+- [x] Permission-based field-level access (basic role filtering in admin schema/UI)
+- [x] Role-based UI controls (write/delete gating in admin panel)
+- [x] PDF report generation backend
+- [x] Excel export engine backend
+- [x] Report scheduling UI & jobs
+- [x] Three.js 3D overlay sync
+- [x] Finalize heatmap/route/geofence layers
+- [x] Asset route playback UI
+- [x] Socket.IO event persistence
+- [x] Socket namespace authorization
+- [x] File upload management & UI
+- [x] Import engine (CSV/GeoJSON)
+- [ ] MapTiler Server deployment
+- [ ] Offline MBTiles tile support
+- [x] Service worker / PWA support
+- [x] CI/CD pipelines & automation
+- [ ] Unit tests (backend & frontend)
+- [ ] E2E tests (Cypress/Playwright)
+- [x] Token revocation / refresh store
+- [x] Secrets management strategy
+- [ ] Monitoring, logging, metrics
+- [x] DB indexing & performance tuning
+- [x] API docs (OpenAPI/Swagger)
+- [ ] Accessibility & responsive fixes
+- [x] Bundle optimizations / code-splitting
+- [x] Email & SMS notification channels
+- [x] Background job queue (Bull/Redis)
+- [x] PDF viewer UI for reports
+- [x] Permission field-level tests
+- [ ] Automated seed & demo UI

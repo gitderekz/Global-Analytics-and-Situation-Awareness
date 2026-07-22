@@ -14,6 +14,9 @@ import FraudPage from './pages/FraudPage';
 import IoTPage from './pages/IoTPage';
 import EmergencyPage from './pages/EmergencyPage';
 import ReportsPage from './pages/ReportsPage';
+import ImportPage from './pages/ImportPage';
+import MetricsPage from './pages/MetricsPage';
+import DocsPage from './pages/DocsPage';
 import SettingsPage from './pages/SettingsPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage';
@@ -57,6 +60,9 @@ export default function App() {
         <Route path="iot" element={<IoTPage />} />
         <Route path="emergency" element={<EmergencyPage />} />
         <Route path="reports" element={<ReportsPage />} />
+        <Route path="import" element={<ImportPage />} />
+        <Route path="metrics" element={<MetricsPage />} />
+        <Route path="docs" element={<DocsPage />} />
         <Route path="admin" element={<AdminPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="profile" element={<ProfilePage />} />

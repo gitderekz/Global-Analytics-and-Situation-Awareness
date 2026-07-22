@@ -8,9 +8,14 @@ const { Server } = require('socket.io');
 
 const db = require('./models');
 const routes = require('./routes');
+const importRoutes = require('./routes/import');
+const metricsRoutes = require('./routes/metrics');
+const docsRoutes = require('./routes/docs');
 const { setupSocket } = require('./socket/socketServer');
 const logger = require('./utils/logger');
 const { sanitizeBody } = require('./middlewares/sanitize');
+const { initJobs } = require('./services/jobQueue');
+const mbtilesService = require('./services/mbtilesService');
 
 const eventController = require('./controllers/eventController');
 const assetController = require('./controllers/assetController');
@@ -45,6 +50,9 @@ app.use(rateLimit({
   message: { success: false, message: 'Too many requests', data: null },
 }));
 
+app.use('/api/v1/docs', docsRoutes);
+app.use('/api/v1/import', importRoutes);
+app.use('/api/v1/metrics', metricsRoutes);
 app.use('/api/v1', routes);
 
 app.use((err, req, res, next) => {
@@ -59,8 +67,10 @@ const start = async () => {
     await db.sequelize.authenticate();
     logger.info('Database connected');
 
-    await db.sequelize.sync({ alter: process.env.NODE_ENV === 'development' });
+    await db.sequelize.sync({ alter: process.env.NODE_ENV === 'developmentEE' });
     logger.info('Database synced');
+    await mbtilesService.initializeMbtiles();
+    await initJobs();
 
     server.listen(PORT, () => {
       logger.info(`Server running on port ${PORT}`);

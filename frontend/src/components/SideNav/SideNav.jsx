@@ -13,6 +13,9 @@ const modules = [
   { path: '/iot', label: 'IoT Monitoring', icon: '📡' },
   { path: '/emergency', label: 'Emergency Response', icon: '🚨' },
   { path: '/reports', label: 'Reports', icon: '📊' },
+  { path: '/import', label: 'Import', icon: '📥' },
+  { path: '/metrics', label: 'Metrics', icon: '📈' },
+  { path: '/docs', label: 'API Docs', icon: '📚' },
   { path: '/admin', label: 'Data Management', icon: '🗄' },
   { path: '/settings', label: 'Settings', icon: '⚙' },
 ];

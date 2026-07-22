@@ -11,6 +11,8 @@ router.get('/schema', authenticate, adminController.getSchema);
 router.get('/heatmap/geojson', authenticate, adminController.getHeatmapGeoJSON);
 router.get('/routes/geojson', authenticate, adminController.getRoutesGeoJSON);
 router.get('/geofences/geojson', authenticate, adminController.getGeofencesGeoJSON);
+router.get('/geofence-points/by-geofence/:id', authenticate, adminController.getGeofencePoints);
+router.post('/demo/seed', authenticate, authorize('Super Admin', 'Admin'), adminController.seedDemoData);
 
 router.use('/users', (() => {
   const r = express.Router();
