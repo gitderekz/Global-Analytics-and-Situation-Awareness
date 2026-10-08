@@ -11,6 +11,11 @@ export default function NetworkPage() {
         { title: 'Network Status', key: 'networkStatus', icon: '🌐', color: 'var(--success)' },
         { title: 'Open Alerts', key: 'openAlerts', icon: '⚠', color: 'var(--warning)' },
       ]}
+      mapDataTransform={(payload) => ({
+        events: payload?.events || { type: 'FeatureCollection', features: [] },
+        assets: { type: 'FeatureCollection', features: [] },
+        devices: payload?.devices || { type: 'FeatureCollection', features: [] },
+      })}
       tableConfig={{
         title: 'Network Devices',
         endpoint: '/devices',

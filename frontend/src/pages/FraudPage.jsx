@@ -11,6 +11,11 @@ export default function FraudPage() {
         { title: 'Critical Alerts', key: 'criticalAlerts', icon: '🚨', color: 'var(--danger)' },
         { title: 'Open Alerts', key: 'openAlerts', icon: '⚠', color: 'var(--warning)' },
       ]}
+      mapDataTransform={(payload) => ({
+        events: payload?.events || { type: 'FeatureCollection', features: [] },
+        assets: { type: 'FeatureCollection', features: [] },
+        devices: { type: 'FeatureCollection', features: [] },
+      })}
       tableConfig={{
         title: 'Fraud Events',
         endpoint: '/events',

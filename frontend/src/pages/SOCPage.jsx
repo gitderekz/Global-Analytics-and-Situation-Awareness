@@ -11,6 +11,11 @@ export default function SOCPage() {
         { title: 'Critical Alerts', key: 'criticalAlerts', icon: '🚨', color: 'var(--danger)' },
         { title: 'Total Events', key: 'totalEvents', icon: '⚡' },
       ]}
+      mapDataTransform={(payload) => ({
+        events: payload?.events || { type: 'FeatureCollection', features: [] },
+        assets: { type: 'FeatureCollection', features: [] },
+        devices: { type: 'FeatureCollection', features: [] },
+      })}
       tableConfig={{
         title: 'Security Events',
         endpoint: '/events',

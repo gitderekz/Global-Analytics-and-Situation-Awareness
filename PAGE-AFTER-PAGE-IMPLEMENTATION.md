@@ -1,32 +1,18 @@
-
-Now lets work on one page after another 
-1. start with event monitoring
-- i want when this page loads to display/render all the markers for events fetched/loaded on the map since that's what this page is made for
-- i want when the markers are hovered they should display little translucent bubble/modal/note with short info about that event and area which are comming/fetched from backend[
-title
-eventType
-city
-country
-(latitude,longitude)
-]
-- on the Analytics top section it should show scrollable list those events fetched and on the bottom the chart/graph should remain as it is 
-- on Recent Events section it should work on displaying data too
-
-
-
+Now lets continue with another page 
+2. Asset Tracking
 
 - when the page loads among the requests and responses are:
 [
     Request URL
-    http://localhost:5000/api/v1/analytics/map-data
-    Request Method
-    GET
-    Status Code
-    304 Not Modified
-    Remote Address
-    [::1]:5000
-    Referrer Policy
-    strict-origin-when-cross-origin
+http://localhost:5000/api/v1/analytics/map-data
+Request Method
+GET
+Status Code
+304 Not Modified
+Remote Address
+[::1]:5000
+Referrer Policy
+strict-origin-when-cross-origin
 
     ITS RESPONSE:
 {
@@ -52,6 +38,10 @@ country
                         "status": "Open",
                         "severity": "Critical",
                         "eventType": "Cyber Attack",
+                        "city": "Beijing",
+                        "country": "China",
+                        "latitude": 39.9042,
+                        "longitude": 116.4074,
                         "color": "#ef4444",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -73,6 +63,10 @@ country
                         "status": "Investigating",
                         "severity": "High",
                         "eventType": "Network Outage",
+                        "city": "New York",
+                        "country": "United States",
+                        "latitude": 40.7128,
+                        "longitude": -74.006,
                         "color": "#f97316",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -94,6 +88,10 @@ country
                         "status": "Open",
                         "severity": "Medium",
                         "eventType": "Sensor Alert",
+                        "city": "Dar es Salaam",
+                        "country": "Tanzania",
+                        "latitude": -6.7924,
+                        "longitude": 39.2083,
                         "color": "#eab308",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -115,6 +113,10 @@ country
                         "status": "In Progress",
                         "severity": "High",
                         "eventType": "Traffic Incident",
+                        "city": "Nairobi",
+                        "country": "Kenya",
+                        "latitude": -1.2921,
+                        "longitude": 36.8219,
                         "color": "#f97316",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -136,6 +138,10 @@ country
                         "status": "Open",
                         "severity": "High",
                         "eventType": "Fraud",
+                        "city": "London",
+                        "country": "United Kingdom",
+                        "latitude": 51.5074,
+                        "longitude": -0.1278,
                         "color": "#f97316",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -157,6 +163,10 @@ country
                         "status": "Open",
                         "severity": "Critical",
                         "eventType": "Emergency",
+                        "city": "Dar es Salaam",
+                        "country": "Tanzania",
+                        "latitude": -6.816,
+                        "longitude": 39.2803,
                         "color": "#ef4444",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -178,6 +188,10 @@ country
                         "status": "Resolved",
                         "severity": "Medium",
                         "eventType": "Unauthorized Access",
+                        "city": "Moscow",
+                        "country": "Russia",
+                        "latitude": 55.7558,
+                        "longitude": 37.6173,
                         "color": "#eab308",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -199,6 +213,10 @@ country
                         "status": "Open",
                         "severity": "Low",
                         "eventType": "Asset Movement",
+                        "city": "Singapore",
+                        "country": "Singapore",
+                        "latitude": 1.3521,
+                        "longitude": 103.8198,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -220,6 +238,10 @@ country
                         "status": "Open",
                         "severity": "Low",
                         "eventType": "Sensor Spike",
+                        "city": "Dar es Salaam",
+                        "country": "Tanzania",
+                        "latitude": -6.795,
+                        "longitude": 39.21,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -241,6 +263,10 @@ country
                         "status": "Open",
                         "severity": "Low",
                         "eventType": "Sensor Spike",
+                        "city": "Dar es Salaam",
+                        "country": "Tanzania",
+                        "latitude": -6.799,
+                        "longitude": 39.215,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -262,6 +288,10 @@ country
                         "status": "Open",
                         "severity": "Medium",
                         "eventType": "Sensor Spike",
+                        "city": "Dar es Salaam",
+                        "country": "Tanzania",
+                        "latitude": -6.803,
+                        "longitude": 39.218,
                         "color": "#eab308",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -287,6 +317,10 @@ country
                         "name": "Fleet Truck Alpha",
                         "status": "active",
                         "assetType": "Vehicle",
+                        "city": "",
+                        "country": "",
+                        "latitude": -6.7924,
+                        "longitude": 39.2083,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -307,6 +341,10 @@ country
                         "name": "Cargo Flight TZ-401",
                         "status": "active",
                         "assetType": "Aircraft",
+                        "city": "",
+                        "country": "",
+                        "latitude": -1.5,
+                        "longitude": 35,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -327,6 +365,10 @@ country
                         "name": "MV Indian Ocean",
                         "status": "active",
                         "assetType": "Ship",
+                        "city": "",
+                        "country": "",
+                        "latitude": -5,
+                        "longitude": 40,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -347,6 +389,10 @@ country
                         "name": "Survey Drone D-07",
                         "status": "active",
                         "assetType": "Drone",
+                        "city": "",
+                        "country": "",
+                        "latitude": -6.7735,
+                        "longitude": 39.2295,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -367,6 +413,10 @@ country
                         "name": "CNT-88421",
                         "status": "active",
                         "assetType": "Container",
+                        "city": "",
+                        "country": "",
+                        "latitude": 1.3521,
+                        "longitude": 103.8198,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -387,6 +437,10 @@ country
                         "name": "Emergency Response Unit",
                         "status": "active",
                         "assetType": "Vehicle",
+                        "city": "",
+                        "country": "",
+                        "latitude": -1.2921,
+                        "longitude": 36.8219,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -407,6 +461,10 @@ country
                         "name": "ATM Akiba Commercial Bank, Tegeta Kibo",
                         "status": "active",
                         "assetType": "Machine",
+                        "city": "",
+                        "country": "",
+                        "latitude": -6.6596299,
+                        "longitude": 39.1814929,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-10-08T10:28:59.000Z"
@@ -432,6 +490,10 @@ country
                         "name": "Temp Sensor Warehouse A",
                         "status": "online",
                         "deviceType": "Sensor",
+                        "city": "",
+                        "country": "",
+                        "latitude": -6.7924,
+                        "longitude": 39.2083,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -452,6 +514,10 @@ country
                         "name": "Security Camera Gate 3",
                         "status": "online",
                         "deviceType": "Camera",
+                        "city": "",
+                        "country": "",
+                        "latitude": -6.816,
+                        "longitude": 39.2803,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -472,6 +538,10 @@ country
                         "name": "IoT Gateway Main",
                         "status": "online",
                         "deviceType": "Gateway",
+                        "city": "",
+                        "country": "",
+                        "latitude": 40.7128,
+                        "longitude": -74.006,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -492,6 +562,10 @@ country
                         "name": "Core Router NYC",
                         "status": "offline",
                         "deviceType": "Router",
+                        "city": "",
+                        "country": "",
+                        "latitude": 40.7128,
+                        "longitude": -74.006,
                         "color": "#6b7280",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -512,6 +586,10 @@ country
                         "name": "GPS Tracker Unit 330",
                         "status": "online",
                         "deviceType": "Tracker",
+                        "city": "",
+                        "country": "",
+                        "latitude": -1.2921,
+                        "longitude": 36.8219,
                         "color": "#22c55e",
                         "metadata": {},
                         "timestamp": "2026-07-22T11:07:18.000Z"
@@ -522,9 +600,8 @@ country
     }
 }
 
-
-    -----------------------------------------------------
-    Request URL
+----------------------------------------------------
+Request URL
 http://localhost:5000/api/v1/analytics/kpis
 Request Method
 GET
@@ -534,6 +611,7 @@ Remote Address
 [::1]:5000
 Referrer Policy
 strict-origin-when-cross-origin
+
 
     ITS RESPONSE:
 {
@@ -549,271 +627,13 @@ strict-origin-when-cross-origin
         "threatCount": 1,
         "countriesActive": 7,
         "networkStatus": "healthy",
-        "lastUpdate": "2026-10-08T13:41:00.264Z"
+        "lastUpdate": "2026-10-08T15:57:41.041Z"
     }
 }
 
-
------------------------------------------
-    Request URL
-    http://localhost:5000/api/v1/events?limit=20
-    Request Method
-    GET
-    Status Code
-    304 Not Modified
-    Remote Address
-    [::1]:5000
-    Referrer Policy
-    strict-origin-when-cross-origin
-
-
-    ITS RESPONSE:
-{
-    "success": true,
-    "message": "Success",
-    "data": {
-        "events": [
-            {
-                "id": 1,
-                "eventType": "Cyber Attack",
-                "title": "DDoS Attack Detected",
-                "description": "Distributed denial of service attack from external source",
-                "severity": "Critical",
-                "status": "Open",
-                "source": "SOC",
-                "locationId": null,
-                "latitude": "39.9042000",
-                "longitude": "116.4074000",
-                "country": "China",
-                "region": null,
-                "city": "Beijing",
-                "startTime": "2026-07-22T11:07:18.000Z",
-                "endTime": null,
-                "metadata": null,
-                "createdBy": null,
-                "createdAt": "2026-07-22T11:07:18.000Z",
-                "updatedAt": "2026-07-22T11:07:18.000Z"
-            },
-            {
-                "id": 2,
-                "eventType": "Network Outage",
-                "title": "Router Failure - NYC",
-                "description": "Core router offline in New York datacenter",
-                "severity": "High",
-                "status": "Investigating",
-                "source": "NOC",
-                "locationId": null,
-                "latitude": "40.7128000",
-                "longitude": "-74.0060000",
-                "country": "United States",
-                "region": null,
-                "city": "New York",
-                "startTime": "2026-07-22T11:07:18.000Z",
-                "endTime": null,
-                "metadata": null,
-                "createdBy": null,
-                "createdAt": "2026-07-22T11:07:18.000Z",
-                "updatedAt": "2026-07-22T11:07:18.000Z"
-            },
-            {
-                "id": 3,
-                "eventType": "Sensor Alert",
-                "title": "Temperature Threshold Exceeded",
-                "description": "Industrial sensor reading above safe limit",
-                "severity": "Medium",
-                "status": "Open",
-                "source": "IoT",
-                "locationId": null,
-                "latitude": "-6.7924000",
-                "longitude": "39.2083000",
-                "country": "Tanzania",
-                "region": null,
-                "city": "Dar es Salaam",
-                "startTime": "2026-07-22T11:07:18.000Z",
-                "endTime": null,
-                "metadata": null,
-                "createdBy": null,
-                "createdAt": "2026-07-22T11:07:18.000Z",
-                "updatedAt": "2026-07-22T11:07:18.000Z"
-            },
-            {
-                "id": 4,
-                "eventType": "Traffic Incident",
-                "title": "Highway Collision",
-                "description": "Multi-vehicle accident on main highway",
-                "severity": "High",
-                "status": "In Progress",
-                "source": "Emergency",
-                "locationId": null,
-                "latitude": "-1.2921000",
-                "longitude": "36.8219000",
-                "country": "Kenya",
-                "region": null,
-                "city": "Nairobi",
-                "startTime": "2026-07-22T11:07:18.000Z",
-                "endTime": null,
-                "metadata": null,
-                "createdBy": null,
-                "createdAt": "2026-07-22T11:07:18.000Z",
-                "updatedAt": "2026-07-22T11:07:18.000Z"
-            },
-            {
-                "id": 5,
-                "eventType": "Fraud",
-                "title": "Suspicious Transaction Cluster",
-                "description": "Multiple high-value transactions from same region",
-                "severity": "High",
-                "status": "Open",
-                "source": "Fraud Detection",
-                "locationId": null,
-                "latitude": "51.5074000",
-                "longitude": "-0.1278000",
-                "country": "United Kingdom",
-                "region": null,
-                "city": "London",
-                "startTime": "2026-07-22T11:07:18.000Z",
-                "endTime": null,
-                "metadata": null,
-                "createdBy": null,
-                "createdAt": "2026-07-22T11:07:18.000Z",
-                "updatedAt": "2026-07-22T11:07:18.000Z"
-            },
-            {
-                "id": 6,
-                "eventType": "Emergency",
-                "title": "Flood Warning",
-                "description": "Rising water levels in coastal area",
-                "severity": "Critical",
-                "status": "Open",
-                "source": "Emergency Services",
-                "locationId": null,
-                "latitude": "-6.8160000",
-                "longitude": "39.2803000",
-                "country": "Tanzania",
-                "region": null,
-                "city": "Dar es Salaam",
-                "startTime": "2026-07-22T11:07:18.000Z",
-                "endTime": null,
-                "metadata": null,
-                "createdBy": null,
-                "createdAt": "2026-07-22T11:07:18.000Z",
-                "updatedAt": "2026-07-22T11:07:18.000Z"
-            },
-            {
-                "id": 7,
-                "eventType": "Unauthorized Access",
-                "title": "Failed Login Attempts",
-                "description": "Brute force attack on admin portal",
-                "severity": "Medium",
-                "status": "Resolved",
-                "source": "SOC",
-                "locationId": null,
-                "latitude": "55.7558000",
-                "longitude": "37.6173000",
-                "country": "Russia",
-                "region": null,
-                "city": "Moscow",
-                "startTime": "2026-07-21T11:07:18.000Z",
-                "endTime": null,
-                "metadata": null,
-                "createdBy": null,
-                "createdAt": "2026-07-22T11:07:18.000Z",
-                "updatedAt": "2026-07-22T11:07:18.000Z"
-            },
-            {
-                "id": 8,
-                "eventType": "Asset Movement",
-                "title": "Container Deviation",
-                "description": "Shipping container off planned route",
-                "severity": "Low",
-                "status": "Open",
-                "source": "Logistics",
-                "locationId": null,
-                "latitude": "1.3521000",
-                "longitude": "103.8198000",
-                "country": "Singapore",
-                "region": null,
-                "city": "Singapore",
-                "startTime": "2026-07-22T11:07:18.000Z",
-                "endTime": null,
-                "metadata": null,
-                "createdBy": null,
-                "createdAt": "2026-07-22T11:07:18.000Z",
-                "updatedAt": "2026-07-22T11:07:18.000Z"
-            },
-            {
-                "id": 9,
-                "eventType": "Sensor Spike",
-                "title": "Temp spike",
-                "description": null,
-                "severity": "Low",
-                "status": "Open",
-                "source": "IoT",
-                "locationId": null,
-                "latitude": "-6.7950000",
-                "longitude": "39.2100000",
-                "country": "Tanzania",
-                "region": null,
-                "city": "Dar es Salaam",
-                "startTime": "2026-07-22T11:07:18.000Z",
-                "endTime": null,
-                "metadata": null,
-                "createdBy": null,
-                "createdAt": "2026-07-22T11:07:18.000Z",
-                "updatedAt": "2026-07-22T11:07:18.000Z"
-            },
-            {
-                "id": 10,
-                "eventType": "Sensor Spike",
-                "title": "Humidity spike",
-                "description": null,
-                "severity": "Low",
-                "status": "Open",
-                "source": "IoT",
-                "locationId": null,
-                "latitude": "-6.7990000",
-                "longitude": "39.2150000",
-                "country": "Tanzania",
-                "region": null,
-                "city": "Dar es Salaam",
-                "startTime": "2026-07-22T11:07:18.000Z",
-                "endTime": null,
-                "metadata": null,
-                "createdBy": null,
-                "createdAt": "2026-07-22T11:07:18.000Z",
-                "updatedAt": "2026-07-22T11:07:18.000Z"
-            },
-            {
-                "id": 11,
-                "eventType": "Sensor Spike",
-                "title": "Vibration",
-                "description": null,
-                "severity": "Medium",
-                "status": "Open",
-                "source": "IoT",
-                "locationId": null,
-                "latitude": "-6.8030000",
-                "longitude": "39.2180000",
-                "country": "Tanzania",
-                "region": null,
-                "city": "Dar es Salaam",
-                "startTime": "2026-07-22T11:07:18.000Z",
-                "endTime": null,
-                "metadata": null,
-                "createdBy": null,
-                "createdAt": "2026-07-22T11:07:18.000Z",
-                "updatedAt": "2026-07-22T11:07:18.000Z"
-            }
-        ],
-        "total": 11,
-        "page": 1,
-        "limit": 20
-    }
-}
-
----------------------------------
+----------------------------------------------------
 Request URL
-http://localhost:5000/api/v1/analytics/event-types
+http://localhost:5000/api/v1/assets?limit=20
 Request Method
 GET
 Status Code
@@ -824,48 +644,127 @@ Referrer Policy
 strict-origin-when-cross-origin
 
 
-RESPONSE:
+    ITS RESPONSE:
 {
     "success": true,
     "message": "Success",
-    "data": [
-        {
-            "eventType": "Asset Movement",
-            "count": 1
-        },
-        {
-            "eventType": "Cyber Attack",
-            "count": 1
-        },
-        {
-            "eventType": "Emergency",
-            "count": 1
-        },
-        {
-            "eventType": "Fraud",
-            "count": 1
-        },
-        {
-            "eventType": "Network Outage",
-            "count": 1
-        },
-        {
-            "eventType": "Sensor Alert",
-            "count": 1
-        },
-        {
-            "eventType": "Sensor Spike",
-            "count": 3
-        },
-        {
-            "eventType": "Traffic Incident",
-            "count": 1
-        },
-        {
-            "eventType": "Unauthorized Access",
-            "count": 1
-        }
-    ]
+    "data": {
+        "assets": [
+            {
+                "id": 7,
+                "assetType": "Machine",
+                "name": "ATM Akiba Commercial Bank, Tegeta Kibo",
+                "description": "Mashine ya ATM Akiba Commercial Bank iliyopo Tegeta Kibo",
+                "status": "active",
+                "locationId": null,
+                "latitude": "-6.6596299",
+                "longitude": "39.1814929",
+                "speed": "1.00",
+                "heading": "1.00",
+                "altitude": "10.00",
+                "metadata": null,
+                "createdAt": "2026-10-08T10:28:59.000Z",
+                "updatedAt": "2026-10-08T10:28:59.000Z"
+            },
+            {
+                "id": 1,
+                "assetType": "Vehicle",
+                "name": "Fleet Truck Alpha",
+                "description": null,
+                "status": "active",
+                "locationId": null,
+                "latitude": "-6.7924000",
+                "longitude": "39.2083000",
+                "speed": "45.50",
+                "heading": "180.00",
+                "altitude": null,
+                "metadata": null,
+                "createdAt": "2026-07-22T11:07:18.000Z",
+                "updatedAt": "2026-07-22T11:07:18.000Z"
+            },
+            {
+                "id": 2,
+                "assetType": "Aircraft",
+                "name": "Cargo Flight TZ-401",
+                "description": null,
+                "status": "active",
+                "locationId": null,
+                "latitude": "-1.5000000",
+                "longitude": "35.0000000",
+                "speed": "850.00",
+                "heading": "45.00",
+                "altitude": "10000.00",
+                "metadata": null,
+                "createdAt": "2026-07-22T11:07:18.000Z",
+                "updatedAt": "2026-07-22T11:07:18.000Z"
+            },
+            {
+                "id": 3,
+                "assetType": "Ship",
+                "name": "MV Indian Ocean",
+                "description": null,
+                "status": "active",
+                "locationId": null,
+                "latitude": "-5.0000000",
+                "longitude": "40.0000000",
+                "speed": "18.00",
+                "heading": "270.00",
+                "altitude": null,
+                "metadata": null,
+                "createdAt": "2026-07-22T11:07:18.000Z",
+                "updatedAt": "2026-07-22T11:07:18.000Z"
+            },
+            {
+                "id": 4,
+                "assetType": "Drone",
+                "name": "Survey Drone D-07",
+                "description": null,
+                "status": "active",
+                "locationId": null,
+                "latitude": "-6.7735000",
+                "longitude": "39.2295000",
+                "speed": "25.00",
+                "heading": "90.00",
+                "altitude": null,
+                "metadata": null,
+                "createdAt": "2026-07-22T11:07:18.000Z",
+                "updatedAt": "2026-07-22T11:07:18.000Z"
+            },
+            {
+                "id": 5,
+                "assetType": "Container",
+                "name": "CNT-88421",
+                "description": null,
+                "status": "active",
+                "locationId": null,
+                "latitude": "1.3521000",
+                "longitude": "103.8198000",
+                "speed": "0.00",
+                "heading": "0.00",
+                "altitude": null,
+                "metadata": null,
+                "createdAt": "2026-07-22T11:07:18.000Z",
+                "updatedAt": "2026-07-22T11:07:18.000Z"
+            },
+            {
+                "id": 6,
+                "assetType": "Vehicle",
+                "name": "Emergency Response Unit",
+                "description": null,
+                "status": "active",
+                "locationId": null,
+                "latitude": "-1.2921000",
+                "longitude": "36.8219000",
+                "speed": "60.00",
+                "heading": "315.00",
+                "altitude": null,
+                "metadata": null,
+                "createdAt": "2026-07-22T11:07:18.000Z",
+                "updatedAt": "2026-07-22T11:07:18.000Z"
+            }
+        ],
+        "total": 7
+    }
 }
 
 ]

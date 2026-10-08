@@ -10,6 +10,11 @@ export default function AssetsPage() {
         { title: 'Total Events', key: 'totalEvents', icon: '⚡' },
         { title: 'Countries Active', key: 'countriesActive', icon: '🌍' },
       ]}
+      mapDataTransform={(payload) => ({
+        events: { type: 'FeatureCollection', features: [] },
+        assets: payload?.assets || { type: 'FeatureCollection', features: [] },
+        devices: { type: 'FeatureCollection', features: [] },
+      })}
       tableConfig={{
         title: 'Tracked Assets',
         endpoint: '/assets',
@@ -21,6 +26,9 @@ export default function AssetsPage() {
           { key: 'speed', label: 'Speed', render: (row) => row.speed ? `${row.speed} km/h` : '—' },
         ],
       }}
+      chartEndpoint="/analytics/severity"
+      chartLabelKey="severity"
+      chartValueKey="count"
     />
   );
 }

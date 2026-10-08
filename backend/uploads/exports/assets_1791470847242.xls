@@ -1,0 +1,8 @@
+id	assetType	name	status	latitude	longitude	speed	updatedAt
+7	Machine	ATM Akiba Commercial Bank, Tegeta Kibo	active	-6.6596299	39.1814929	1.00	Thu Oct 08 2026 13:28:59 GMT+0300 (East Africa Time)
+6	Vehicle	Emergency Response Unit	active	-1.2921000	36.8219000	60.00	Wed Jul 22 2026 14:07:18 GMT+0300 (East Africa Time)
+5	Container	CNT-88421	active	1.3521000	103.8198000	0.00	Wed Jul 22 2026 14:07:18 GMT+0300 (East Africa Time)
+4	Drone	Survey Drone D-07	active	-6.7735000	39.2295000	25.00	Wed Jul 22 2026 14:07:18 GMT+0300 (East Africa Time)
+3	Ship	MV Indian Ocean	active	-5.0000000	40.0000000	18.00	Wed Jul 22 2026 14:07:18 GMT+0300 (East Africa Time)
+2	Aircraft	Cargo Flight TZ-401	active	-1.5000000	35.0000000	850.00	Wed Jul 22 2026 14:07:18 GMT+0300 (East Africa Time)
+1	Vehicle	Fleet Truck Alpha	active	-6.7924000	39.2083000	45.50	Wed Jul 22 2026 14:07:18 GMT+0300 (East Africa Time)

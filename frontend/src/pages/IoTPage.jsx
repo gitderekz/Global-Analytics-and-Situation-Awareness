@@ -11,6 +11,11 @@ export default function IoTPage() {
         { title: 'Total Events', key: 'totalEvents', icon: '⚡' },
         { title: 'Open Alerts', key: 'openAlerts', icon: '⚠', color: 'var(--warning)' },
       ]}
+      mapDataTransform={(payload) => ({
+        events: payload?.events || { type: 'FeatureCollection', features: [] },
+        assets: { type: 'FeatureCollection', features: [] },
+        devices: payload?.devices || { type: 'FeatureCollection', features: [] },
+      })}
       tableConfig={{
         title: 'IoT Devices',
         endpoint: '/devices',
@@ -22,6 +27,9 @@ export default function IoTPage() {
           { key: 'status', label: 'Status' },
         ],
       }}
+      chartEndpoint="/analytics/severity"
+      chartLabelKey="severity"
+      chartValueKey="count"
     />
   );
 }

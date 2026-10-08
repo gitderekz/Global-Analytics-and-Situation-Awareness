@@ -139,6 +139,8 @@ const seed = async () => {
       { eventType: 'Sensor Spike', title: 'Vibration', severity: 'Medium', status: 'Open', source: 'IoT', latitude: -6.8030, longitude: 39.2180, country: 'Tanzania', city: 'Dar es Salaam', startTime: new Date() },
     ]);
 
+    await seedRoutesAndHeatmap();
+
     console.log('Seed completed successfully');
     console.log('Login: admin@analytics.local / admin123');
     process.exit(0);
@@ -149,3 +151,65 @@ const seed = async () => {
 };
 
 seed();
+
+const seedRoutesAndHeatmap = async () => {
+  const routeSeeds = [
+    {
+      name: 'Harbor Run',
+      status: 'active',
+      points: [
+        { latitude: -6.7924, longitude: 39.2083 },
+        { latitude: -6.8000, longitude: 39.2200 },
+        { latitude: -6.8100, longitude: 39.2350 },
+        { latitude: -6.8200, longitude: 39.2480 },
+        { latitude: -6.8300, longitude: 39.2600 },
+      ],
+    },
+    {
+      name: 'Coastal Patrol',
+      status: 'planned',
+      points: [
+        { latitude: -6.8200, longitude: 39.2500 },
+        { latitude: -6.8300, longitude: 39.2700 },
+        { latitude: -6.8400, longitude: 39.2900 },
+        { latitude: -6.8550, longitude: 39.3050 },
+      ],
+    },
+    {
+      name: 'Airport Corridor',
+      status: 'active',
+      points: [
+        { latitude: -6.7700, longitude: 39.2000 },
+        { latitude: -6.7600, longitude: 39.2200 },
+        { latitude: -6.7480, longitude: 39.2360 },
+      ],
+    },
+  ];
+
+  const existingRouteCount = await db.Route.count();
+  if (existingRouteCount === 0) {
+    const createdRoutes = await db.Route.bulkCreate(routeSeeds.map(({ name, status }) => ({ name, status })));
+    const routePoints = createdRoutes.flatMap((route, idx) =>
+      routeSeeds[idx].points.map((point, sequence) => ({
+        routeId: route.id,
+        latitude: point.latitude,
+        longitude: point.longitude,
+        sequence,
+      }))
+    );
+    if (routePoints.length) await db.RoutePoint.bulkCreate(routePoints);
+  }
+
+  const eventCount = await db.Event.count();
+  if (eventCount < 18) {
+    const heatmapEvents = [
+      { eventType: 'Sensor Spike', title: 'Urban sensor cluster A', severity: 'Low', status: 'Open', source: 'IoT', latitude: -6.7950, longitude: 39.2100, country: 'Tanzania', city: 'Dar es Salaam', startTime: new Date() },
+      { eventType: 'Sensor Spike', title: 'Urban sensor cluster B', severity: 'Low', status: 'Open', source: 'IoT', latitude: -6.7990, longitude: 39.2150, country: 'Tanzania', city: 'Dar es Salaam', startTime: new Date() },
+      { eventType: 'Sensor Spike', title: 'Urban sensor cluster C', severity: 'Medium', status: 'Open', source: 'IoT', latitude: -6.8030, longitude: 39.2180, country: 'Tanzania', city: 'Dar es Salaam', startTime: new Date() },
+      { eventType: 'Sensor Spike', title: 'Harbor sensor cluster', severity: 'High', status: 'Open', source: 'IoT', latitude: -6.8150, longitude: 39.2430, country: 'Tanzania', city: 'Dar es Salaam', startTime: new Date() },
+      { eventType: 'Sensor Spike', title: 'Port edge anomaly', severity: 'Medium', status: 'Investigating', source: 'IoT', latitude: -6.8220, longitude: 39.2550, country: 'Tanzania', city: 'Dar es Salaam', startTime: new Date() },
+      { eventType: 'Sensor Spike', title: 'Logistics corridor', severity: 'Low', status: 'Open', source: 'IoT', latitude: -6.8380, longitude: 39.2800, country: 'Tanzania', city: 'Dar es Salaam', startTime: new Date() },
+    ];
+    await db.Event.bulkCreate(heatmapEvents);
+  }
+};

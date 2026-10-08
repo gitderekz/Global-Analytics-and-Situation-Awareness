@@ -16,6 +16,7 @@ export default function ModulePage({
   chartEndpoint,
   chartLabelKey = 'label',
   chartValueKey = 'count',
+  mapDataTransform,
 }) {
   const [mapData, setMapData] = useState(null);
   const [tableData, setTableData] = useState([]);
@@ -38,7 +39,10 @@ export default function ModulePage({
         }
 
         const results = await Promise.all(requests);
-        if (results[0].data.success) setMapData(results[0].data.data);
+        if (results[0].data.success) {
+          const payload = results[0].data.data;
+          setMapData(typeof mapDataTransform === 'function' ? mapDataTransform(payload) : payload);
+        }
         if (results[1].data.success) setKpis(results[1].data.data);
 
         let idx = 2;
@@ -65,7 +69,7 @@ export default function ModulePage({
       }
     };
     load();
-  }, [title, eventFilter, tableConfig, chartEndpoint, chartLabelKey, chartValueKey]);
+  }, [title, eventFilter, tableConfig, chartEndpoint, chartLabelKey, chartValueKey, mapDataTransform]);
 
   return (
     <div className={styles.page}>
@@ -87,7 +91,6 @@ export default function ModulePage({
           <MapContainer mapData={mapData} />
         </div>
         <div className={styles.sidePanel}>
-          <SimpleChart data={chartData} title="Analytics" labelKey="label" valueKey="count" />
           {tableConfig && (
             <div className={styles.tableSection}>
               <div className={styles.tableTitle}>{tableConfig.title || 'Data'}</div>
@@ -102,6 +105,7 @@ export default function ModulePage({
               />
             </div>
           )}
+          <SimpleChart data={chartData} title="Analytics" labelKey="label" valueKey="count" />
         </div>
       </div>
     </div>

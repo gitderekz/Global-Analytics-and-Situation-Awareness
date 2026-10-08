@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import api from '../services/api';
 import styles from './ImportPage.module.css';
 
@@ -15,11 +15,26 @@ const IMPORT_TYPES = [
   { label: 'Routes', value: 'routes' },
 ];
 
+const sampleHints = {
+  events: 'title, eventType, severity, status, latitude, longitude, country, city',
+  assets: 'name, assetType, status, latitude, longitude, speed, heading',
+  devices: 'deviceId, name, deviceType, status, latitude, longitude',
+  alerts: 'title, severity, status, eventId',
+  threats: 'threatType, sourceIp, destinationIp, country, severity, status',
+  transactions: 'transactionId, amount, currency, riskLevel, status, latitude, longitude',
+  users: 'firstName, lastName, email, password, roleId, status',
+  notifications: 'userId, title, message, type, isRead',
+  geofences: 'name, type, description, active, points',
+  routes: 'name, status, points',
+};
+
 export default function ImportPage() {
   const [type, setType] = useState('events');
   const [file, setFile] = useState(null);
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const sampleColumns = useMemo(() => sampleHints[type] || sampleHints.events, [type]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,6 +68,18 @@ export default function ImportPage() {
         <h2>Data Import</h2>
         <p>Upload CSV or GeoJSON files to add platform data from external sources.</p>
       </div>
+
+      <div className={styles.summaryRow}>
+        <div className={styles.summaryCard}>
+          <span>Accepted</span>
+          <strong>CSV / GeoJSON</strong>
+        </div>
+        <div className={styles.summaryCard}>
+          <span>Current Type</span>
+          <strong>{IMPORT_TYPES.find((opt) => opt.value === type)?.label || type}</strong>
+        </div>
+      </div>
+
       <form className={styles.form} onSubmit={handleSubmit}>
         <label>
           Import type
@@ -62,14 +89,22 @@ export default function ImportPage() {
             ))}
           </select>
         </label>
+
         <label>
           File upload
           <input type="file" accept=".csv,.tsv,.json,.geojson" onChange={(e) => setFile(e.target.files?.[0] || null)} />
         </label>
+
+        <div className={styles.hintBox}>
+          <strong>Expected columns</strong>
+          <span>{sampleColumns}</span>
+        </div>
+
         <div className={styles.actions}>
           <button type="submit" disabled={loading}>{loading ? 'Uploading…' : 'Upload and Import'}</button>
         </div>
       </form>
+
       {status && <div className={styles.status}>{status}</div>}
     </div>
   );

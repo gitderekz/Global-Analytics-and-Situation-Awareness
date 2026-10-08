@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import api from '../services/api';
 import styles from './ReportsPage.module.css';
 
@@ -11,11 +11,20 @@ const REPORT_TYPES = [
   { name: 'Transactions Report', type: 'transactions', formats: ['csv', 'excel'] },
 ];
 
+const formatFileName = (filePath = '') => filePath.split('/').pop() || 'report';
+
 export default function ReportsPage() {
   const [loading, setLoading] = useState(null);
   const [message, setMessage] = useState('');
   const [previewUrl, setPreviewUrl] = useState('');
   const [reports, setReports] = useState([]);
+
+  const stats = useMemo(() => ({
+    total: reports.length,
+    csv: reports.filter((r) => r.type === 'csv').length,
+    excel: reports.filter((r) => r.type === 'excel').length,
+    pdf: reports.filter((r) => r.type === 'pdf').length,
+  }), [reports]);
 
   const handleExport = async (type, format) => {
     setLoading(`${type}-${format}`);
@@ -68,7 +77,16 @@ export default function ReportsPage() {
         <h2>Reports Center</h2>
         <p>Generate and export analytics reports (CSV, Excel, PDF), and review recent generated files.</p>
       </div>
+
+      <div className={styles.summaryRow}>
+        <div className={styles.summaryCard}><span>Total</span><strong>{stats.total}</strong></div>
+        <div className={styles.summaryCard}><span>CSV</span><strong>{stats.csv}</strong></div>
+        <div className={styles.summaryCard}><span>Excel</span><strong>{stats.excel}</strong></div>
+        <div className={styles.summaryCard}><span>PDF</span><strong>{stats.pdf}</strong></div>
+      </div>
+
       {message && <div className={styles.message}>{message}</div>}
+
       <div className={styles.grid}>
         {REPORT_TYPES.map((report) => (
           <div key={report.type} className={styles.card}>
@@ -88,19 +106,24 @@ export default function ReportsPage() {
           </div>
         ))}
       </div>
+
       {reports.length > 0 && (
         <div className={styles.history}>
           <h3>Recent Exports</h3>
           <ul>
             {reports.map((report) => (
               <li key={report.id}>
-                <strong>{report.name}</strong> — {report.type.toUpperCase()} — {new Date(report.generatedAt).toLocaleString()}
-                <a href={`/api/v1/reports/download/${report.filePath.split('/').pop()}`} target="_blank" rel="noreferrer">Download</a>
+                <div>
+                  <strong>{report.name || report.type}</strong>
+                  <span>{report.type?.toUpperCase()} • {new Date(report.generatedAt).toLocaleString()}</span>
+                </div>
+                <a href={`/api/v1/reports/download/${formatFileName(report.filePath)}`} target="_blank" rel="noreferrer">Download</a>
               </li>
             ))}
           </ul>
         </div>
       )}
+
       {previewUrl && (
         <div className={styles.preview}>
           <h3>PDF Preview</h3>

@@ -11,6 +11,11 @@ export default function EmergencyPage() {
         { title: 'Open Alerts', key: 'openAlerts', icon: '⚠', color: 'var(--high-risk)' },
         { title: 'Events Today', key: 'eventsToday', icon: '📅' },
       ]}
+      mapDataTransform={(payload) => ({
+        events: payload?.events || { type: 'FeatureCollection', features: [] },
+        assets: { type: 'FeatureCollection', features: [] },
+        devices: { type: 'FeatureCollection', features: [] },
+      })}
       tableConfig={{
         title: 'Active Incidents',
         endpoint: '/events',

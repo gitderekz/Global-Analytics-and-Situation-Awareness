@@ -61,3 +61,45 @@
   border-radius: 10px;
   color: var(--text-primary);
 }
+
+.summaryRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.summaryCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.summaryCard span {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.summaryCard strong {
+  font-size: 16px;
+}
+
+.hintBox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: rgba(148, 163, 184, 0.05);
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.hintBox strong {
+  color: var(--text-primary);
+}

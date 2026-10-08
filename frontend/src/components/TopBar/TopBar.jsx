@@ -41,6 +41,13 @@ export default function TopBar() {
 
   const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
 
+  const mapStatus = (() => {
+    if (mapMode === 'osm') return { label: 'Map: OSM (Online)', className: styles.online };
+    if (mapMode === 'maptiler') return { label: 'Map: MapTiler (Local)', className: styles.local };
+    if (!navigator.onLine) return { label: 'Map: Offline (Network)', className: styles.offline };
+    return { label: 'Map: MBTiles (Offline)', className: styles.offline };
+  })();
+
   return (
     <header className={styles.topbar}>
       <div className={styles.left}>
@@ -63,8 +70,8 @@ export default function TopBar() {
         <span className={`${styles.status} ${connected ? styles.online : styles.offline}`}>
           {connected ? '● Live' : '○ Offline'}
         </span>
-        <span className={`${styles.status} ${mapMode === 'osm' ? styles.online : mapMode === 'maptiler' ? styles.local : styles.offline}`} title={`Map mode: ${mapMode}`}>
-          {mapMode === 'osm' ? 'Map: OSM (Online)' : mapMode === 'maptiler' ? 'Map: MapTiler (Local)' : 'Map: MBTiles (Offline)'}
+        <span className={`${styles.status} ${mapStatus.className}`} title={`Map mode: ${mapMode}`}>
+          {mapStatus.label}
         </span>
 
         <div className={styles.dropdown}>

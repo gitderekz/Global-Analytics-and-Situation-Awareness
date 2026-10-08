@@ -11,6 +11,11 @@ export default function LogisticsPage() {
         { title: 'Total Events', key: 'totalEvents', icon: '⚡' },
         { title: 'Countries Active', key: 'countriesActive', icon: '🌍' },
       ]}
+      mapDataTransform={(payload) => ({
+        events: payload?.events || { type: 'FeatureCollection', features: [] },
+        assets: payload?.assets || { type: 'FeatureCollection', features: [] },
+        devices: { type: 'FeatureCollection', features: [] },
+      })}
       tableConfig={{
         title: 'Fleet Assets',
         endpoint: '/assets',
@@ -22,6 +27,9 @@ export default function LogisticsPage() {
           { key: 'speed', label: 'Speed' },
         ],
       }}
+      chartEndpoint="/analytics/severity"
+      chartLabelKey="severity"
+      chartValueKey="count"
     />
   );
 }
