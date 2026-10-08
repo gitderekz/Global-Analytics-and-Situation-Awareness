@@ -114,6 +114,31 @@ const seed = async () => {
       ]);
     }
 
+    // Add sample routes and route points for map route layer demonstration
+    const createdRoutes = await db.Route.bulkCreate([
+      { name: 'Harbor Run', assetId: assets[0]?.id || null, status: 'active' },
+      { name: 'Coastal Patrol', assetId: assets[1]?.id || null, status: 'planned' },
+    ]);
+
+    if (createdRoutes && createdRoutes.length) {
+      const rp = [];
+      // Harbor Run route points
+      rp.push({ routeId: createdRoutes[0].id, latitude: -6.7924, longitude: 39.2083, sequence: 0 });
+      rp.push({ routeId: createdRoutes[0].id, latitude: -6.8000, longitude: 39.2200, sequence: 1 });
+      rp.push({ routeId: createdRoutes[0].id, latitude: -6.8100, longitude: 39.2350, sequence: 2 });
+      // Coastal Patrol route points
+      rp.push({ routeId: createdRoutes[1].id, latitude: -6.8200, longitude: 39.2500, sequence: 0 });
+      rp.push({ routeId: createdRoutes[1].id, latitude: -6.8300, longitude: 39.2700, sequence: 1 });
+      await db.RoutePoint.bulkCreate(rp);
+    }
+
+    // Add a few extra events to improve heatmap density
+    await db.Event.bulkCreate([
+      { eventType: 'Sensor Spike', title: 'Temp spike', severity: 'Low', status: 'Open', source: 'IoT', latitude: -6.7950, longitude: 39.2100, country: 'Tanzania', city: 'Dar es Salaam', startTime: new Date() },
+      { eventType: 'Sensor Spike', title: 'Humidity spike', severity: 'Low', status: 'Open', source: 'IoT', latitude: -6.7990, longitude: 39.2150, country: 'Tanzania', city: 'Dar es Salaam', startTime: new Date() },
+      { eventType: 'Sensor Spike', title: 'Vibration', severity: 'Medium', status: 'Open', source: 'IoT', latitude: -6.8030, longitude: 39.2180, country: 'Tanzania', city: 'Dar es Salaam', startTime: new Date() },
+    ]);
+
     console.log('Seed completed successfully');
     console.log('Login: admin@analytics.local / admin123');
     process.exit(0);

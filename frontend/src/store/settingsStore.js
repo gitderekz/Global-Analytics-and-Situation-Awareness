@@ -24,6 +24,12 @@ export const useSettingsStore = create((set) => ({
     set({ mapMode });
   },
 
+  projectionMode: localStorage.getItem('projectionMode') || 'mercator',
+  setProjectionMode: (projectionMode) => {
+    localStorage.setItem('projectionMode', projectionMode);
+    set({ projectionMode });
+  },
+
   setHighContrast: (highContrast) => {
     localStorage.setItem('highContrast', highContrast);
     document.documentElement.setAttribute('data-high-contrast', highContrast ? 'true' : 'false');

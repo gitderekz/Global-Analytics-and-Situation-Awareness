@@ -13,6 +13,7 @@ export default function TopBar() {
   const { user, logout } = useAuthStore();
   const { notifications, markNotificationRead } = useAlertStore();
   const { theme, setTheme } = useSettingsStore();
+  const { mapMode } = useSettingsStore();
   const { flyTo } = useMapStore();
   const { connected } = useSocketStore();
   const [search, setSearch] = useState('');
@@ -61,6 +62,9 @@ export default function TopBar() {
       <div className={styles.right}>
         <span className={`${styles.status} ${connected ? styles.online : styles.offline}`}>
           {connected ? '● Live' : '○ Offline'}
+        </span>
+        <span className={`${styles.status} ${mapMode === 'osm' ? styles.online : mapMode === 'maptiler' ? styles.local : styles.offline}`} title={`Map mode: ${mapMode}`}>
+          {mapMode === 'osm' ? 'Map: OSM (Online)' : mapMode === 'maptiler' ? 'Map: MapTiler (Local)' : 'Map: MBTiles (Offline)'}
         </span>
 
         <div className={styles.dropdown}>

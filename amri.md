@@ -38,8 +38,70 @@ Delivery focus is to ensure..
 - maintain good usability and adaptive interface
 ---------------------------------------------------------------------------------------
 
-You did a great job offline-first. But let us add the toggle button n settings between [Offline and OpenStreetMap internet fallback]
+if you look at the file [frontend/src/maps/MapContainer.jsx] there is commented code and uncommented codes. The commented codes was the initial code and the uncommented codes are the latest, now i want to merge some feature from old codes on displaying online map.
+We did a great job offline-first. But let us add the toggle button n settings between [Offline and OpenStreetMap internet fallback]
 By default it should be offline but if online is needed it should be switched and ready to use so let us bring back the just the OpenStreetMap internet fallback.. this will help when convenient
 
 Then, continue with deeper items next — full PDF generation, geofence point editor UI, or permission-based field-level access?
 
+What do you suggest are the missing pieces in the current backend/frontend wiring list all of them so we can ut them on TODO list
+
+-----------------------
+
+Lets work on <MapControls /> layerToggles for [Clusters,Heatmap,Routes,Geofences,3D View] and make sure when they are toggled they perform some actions we can populate/add dummy points points for easy workaround 
+Lets populate routes & route_points tables for its toggle to work
+Lets populate Heatmap data so that its toggle should work
+
+ALSO LETS FIX PAGE-CONTENT, CHARTS AND TABLE TO BE REFLECTIVE AND RESPONSIVE TO DATA(ADD DATA IF THEY ARE OT AVAILABLE TO SIMULATE REALITY)
+- Where page content is long then the whole page content section should be scrollabe
+1. On dashboard page
+- Severity Distribution chart
+- Events chart
+- Recent Events table should be scrollable
+- Active Alerts table should be scrollable
+
+2. evet monitoring page
+- Analytics  chart
+- Recent Events  chart
+
+3. asset trackig page
+- Tracked Assets table should be scrollable
+
+4. cyber security soc page
+- Analytics  chart
+- Security Events  chart
+
+DO THE SAME IMPROVEMENTS TO THE REST OF PAGES
+ - Network Monitoring age
+ - Logistics Control age
+ - Fraud Detection age
+ - IoT Monitoring age
+ - Emergency Response age
+
+
+ ==>On reports page generates all reports in (CSV,EXCEL,PDF) and also should be able to be exported in both formats
+ ==>On import page when user select Import type the page should help the user by indicating/displaying structure and format of data/columns just like 'input field placeholders'
+ And the import functionality should work as intended, capture data and insert them
+ ==>On API docs page it does not display anything regardless of backend running, THe documentation should always be displayed and up to date and should depend solely in this project frontend&backend without the need of any third part service/assistance
+
+ ==>The Offline/online status pill should reflect when user choose Map Mode so if user uses 
+ - open street map(mapMode === 'osm') this is online link and 
+ - when they use maptiler server(mapMode === 'maptiler') this is local offline maptiler server for vector style and 
+ - when they use MBTiles(OFFLINE_STYLE) this is local offline mapptiler server for raster style
+
+---------------------------------------
+
+There is already a button "seed demo data" in data management page i think it works but if not you can improve it to work
+
+I've already seeded data so Continue with UI fixes (make long page sections scrollable and charts/tables show sample data).
+
+Implement the functionality of button 'reset bearing to north' to work just like in maptiler-server map by bending the map to horizontal like projection
+
+Implement functionality 'enable global projection' ->'enable mercator projection' to work as in maptiler-server map to project the map in sphercal 
+
+=========
+If you want, I can next:
+
+wire the map mode pill offline/online status,
+improve the reports/import pages,
+or add the actual DB-side seeding for routes/heatmap data.

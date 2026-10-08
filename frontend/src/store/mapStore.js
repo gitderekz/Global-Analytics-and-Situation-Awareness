@@ -26,5 +26,6 @@ export const useMapStore = create((set) => ({
   toggleLayer: (layer) => set((s) => ({
     layers: { ...s.layers, [layer]: !s.layers[layer] },
   })),
+  
   flyTo: (lng, lat, zoom = 10) => set({ center: [lng, lat], zoom }),
 }));

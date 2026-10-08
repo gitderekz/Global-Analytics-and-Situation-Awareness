@@ -71,6 +71,7 @@
 
 .online { color: var(--success); }
 .offline { color: var(--text-muted); }
+.local { color: var(--accent); }
 
 .iconBtn {
   background: var(--bg-tertiary);

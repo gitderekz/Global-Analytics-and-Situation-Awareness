@@ -2,6 +2,15 @@
 .table { width:100%; border-collapse: collapse; }
 .table th, .table td { padding:8px 10px; border-bottom:1px solid rgba(255,255,255,0.04); text-align:left; }
 .clickable { cursor:pointer; }
+.placeholderRow td {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+.placeholderNote {
+  padding: 10px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
 .tableWrapper {
   overflow: auto;
   max-height: 100%;

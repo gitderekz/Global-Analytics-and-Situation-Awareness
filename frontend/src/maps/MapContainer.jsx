@@ -10,9 +10,10 @@ import MapLegend from './MapLegend';
 import ThreeOverlay from '../threejs/ThreeOverlay';
 import styles from './MapContainer.module.css';
 
-// const TILE_BASE_URL = `${import.meta.env.VITE_RASTER_MAP_URL || ''}/tiles/{z}/{x}/{y}.png`;
-const TILE_BASE_URL = `${import.meta.env.VITE_RASTER_MAP_URL || ''}/dunia_basic/{z}/{x}/{y}.jpg`;
-const MAPTILER_STYLE_URL = `${import.meta.env.VITE_VECTOR_MAP_URL}/dunia_basic/style.json` || 'http://localhost:3650/styles/basic/style.json';
+// const TILE_BASE_URL = `${import.meta.env.VITE_RASTER_MAP_URL || ''}/dunia_basic/{z}/{x}/{y}.jpg`;
+// const MAPTILER_STYLE_URL = `${import.meta.env.VITE_VECTOR_MAP_URL}/dunia_basic/style.json` || 'http://localhost:3650/styles/basic/style.json';
+const TILE_BASE_URL = `${import.meta.env.VITE_RASTER_MAP_URL || ''}/basic/{z}/{x}/{y}.jpg`;
+const MAPTILER_STYLE_URL = `${import.meta.env.VITE_VECTOR_MAP_URL}/basic/style.json` || 'http://localhost:3650/styles/basic/style.json';
 
 const OFFLINE_STYLE = {
   version: 8,
@@ -54,7 +55,7 @@ export default function MapContainer({ mapData, onObjectClick }) {
   const [offlineMode, setOfflineMode] = useState(false);
   const [styleError, setStyleError] = useState(false);
   const { center, zoom, layers, setSelectedObject } = useMapStore();
-  const { mapMode } = useSettingsStore();
+  const { mapMode, projectionMode, setProjectionMode } = useSettingsStore();
 
   const clearMarkers = useCallback(() => {
     markersRef.current.forEach((m) => m.remove());
@@ -153,6 +154,31 @@ export default function MapContainer({ mapData, onObjectClick }) {
     }
   }, []);
 
+  const resetNorth = useCallback(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    if (typeof map.resetNorth === 'function') {
+      map.resetNorth({ duration: 1000 });
+    } else if (typeof map.easeTo === 'function') {
+      map.easeTo({ bearing: 0, pitch: 0, duration: 1000 });
+    } else if (typeof map.rotateTo === 'function') {
+      map.rotateTo(0, { duration: 1000 });
+      if (typeof map.setPitch === 'function') map.setPitch(0);
+    }
+  }, []);
+
+  const toggleProjectionMode = useCallback(() => {
+    const map = mapRef.current;
+    const nextMode = projectionMode === 'globe' ? 'mercator' : 'globe';
+    setProjectionMode(nextMode);
+    if (!map) return;
+    if (typeof map.setProjection === 'function') {
+      map.setProjection({ name: nextMode });
+    } else if (typeof map.setStyle === 'function') {
+      map.setStyle(map.getStyle());
+    }
+  }, [projectionMode, setProjectionMode]);
+
   const renderMarkers = useCallback((map, data) => {
     clearMarkers();
     if (!data) return;
@@ -212,6 +238,7 @@ export default function MapContainer({ mapData, onObjectClick }) {
     }
   }, [clearMarkers, layers, onObjectClick, setSelectedObject]);
 
+
   useEffect(() => {
     if (mapRef.current || !mapContainer.current) return;
 
@@ -223,6 +250,7 @@ export default function MapContainer({ mapData, onObjectClick }) {
       zoom,
       pitch: 0,
       bearing: 0,
+      projection: projectionMode,
       attributionControl: false,
     });
 
@@ -271,10 +299,13 @@ export default function MapContainer({ mapData, onObjectClick }) {
 
     const nextStyle = mapMode === 'osm' ? OSM_STYLE : mapMode === 'maptiler' ? MAPTILER_STYLE_URL : OFFLINE_STYLE;
     map.setStyle(nextStyle);
+    if (typeof map.setProjection === 'function') {
+      map.setProjection({ name: projectionMode });
+    }
     map.once('styledata', () => {
       if (mapData) renderMarkers(map, mapData);
     });
-  }, [mapMode, mapData, renderMarkers, clearMarkers]);
+  }, [mapMode, mapData, projectionMode, renderMarkers, clearMarkers]);
 
   useEffect(() => {
     if (mapRef.current && mapData) renderMarkers(mapRef.current, mapData);
@@ -325,7 +356,11 @@ export default function MapContainer({ mapData, onObjectClick }) {
         </div>
       )}
       {layers.threejs && mapReady && <ThreeOverlay map={mapRef} />}
-      <MapControls />
+      <MapControls
+        onResetNorth={resetNorth}
+        projectionMode={projectionMode}
+        onToggleProjection={toggleProjectionMode}
+      />
       <MapLegend />
     </div>
   );

@@ -1,7 +1,7 @@
 import { useMapStore } from '../store/mapStore';
 import styles from './MapControls.module.css';
 
-export default function MapControls() {
+export default function MapControls({ onResetNorth, projectionMode, onToggleProjection }) {
   const { layers, toggleLayer } = useMapStore();
 
   const layerToggles = [
@@ -26,6 +26,12 @@ export default function MapControls() {
           {label}
         </button>
       ))}
+      <button type="button" className={styles.btn} onClick={onResetNorth}>
+        Reset North
+      </button>
+      <button type="button" className={styles.btn} onClick={onToggleProjection}>
+        {projectionMode === 'globe' ? 'Enable Mercator' : 'Enable Globe'}
+      </button>
     </div>
   );
 }

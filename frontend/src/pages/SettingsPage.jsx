@@ -136,6 +136,25 @@ export default function SettingsPage() {
           <small>Upload a local `.mbtiles` file for offline map tiles.</small>
           {uploadError && <p className={styles.errorText}>{uploadError}</p>}
         </div>
+        <div className={styles.field}>
+          <label>Demo Data</label>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button type="button" className={styles.actionButton} onClick={async () => {
+              try {
+                const resp = await api.post('/admin/demo/seed');
+                if (resp.data?.success) {
+                  alert('Demo data seeded: ' + JSON.stringify(resp.data.data?.seeded || {}));
+                } else {
+                  alert('Seeding failed: ' + (resp.data?.message || resp.statusText));
+                }
+              } catch (err) {
+                alert('Seeding failed: ' + (err?.response?.data?.message || err.message));
+              }
+            }}>
+              Seed Demo Data
+            </button>
+          </div>
+        </div>
       </div>
       <div className={styles.section}>
         <h3>API Configuration</h3>

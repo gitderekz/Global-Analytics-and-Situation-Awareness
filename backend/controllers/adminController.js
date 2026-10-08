@@ -364,6 +364,23 @@ exports.seedDemoData = async (req, res) => {
       initialSeed.tracks += 4;
     }
 
+    // Seed sample routes and route points if missing
+    if ((await db.Route.count()) === 0) {
+      const createdRoutes = await db.Route.bulkCreate([
+        { name: 'Harbor Run', assetId: null, status: 'active' },
+        { name: 'Coastal Patrol', assetId: null, status: 'planned' },
+      ]);
+      if (createdRoutes && createdRoutes.length) {
+        const rp = [];
+        rp.push({ routeId: createdRoutes[0].id, latitude: -6.7924, longitude: 39.2083, sequence: 0 });
+        rp.push({ routeId: createdRoutes[0].id, latitude: -6.8000, longitude: 39.2200, sequence: 1 });
+        rp.push({ routeId: createdRoutes[0].id, latitude: -6.8100, longitude: 39.2350, sequence: 2 });
+        rp.push({ routeId: createdRoutes[1].id, latitude: -6.8200, longitude: 39.2500, sequence: 0 });
+        rp.push({ routeId: createdRoutes[1].id, latitude: -6.8300, longitude: 39.2700, sequence: 1 });
+        await db.RoutePoint.bulkCreate(rp);
+      }
+    }
+
     return success(res, {
       user: { email: adminUser.email },
       seeded: initialSeed,

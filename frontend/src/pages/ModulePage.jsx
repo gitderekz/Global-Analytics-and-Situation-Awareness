@@ -87,9 +87,7 @@ export default function ModulePage({
           <MapContainer mapData={mapData} />
         </div>
         <div className={styles.sidePanel}>
-          {chartData.length > 0 && (
-            <SimpleChart data={chartData} title="Analytics" labelKey="label" valueKey="count" />
-          )}
+          <SimpleChart data={chartData} title="Analytics" labelKey="label" valueKey="count" />
           {tableConfig && (
             <div className={styles.tableSection}>
               <div className={styles.tableTitle}>{tableConfig.title || 'Data'}</div>
